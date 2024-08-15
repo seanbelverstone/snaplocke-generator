@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, FormControlLabel, InputLabel, MenuItem, Select } from '@mui/material';
 import './App.css';
-import camelToTitle from './utils';
+import camelToTitle, { camelToHyphen } from './utils';
 import versions, { expansions } from './versions';
+import Results from './Results';
 
 function App() {
 
@@ -14,31 +15,9 @@ function App() {
 		theIndigoDisk: false
 	});
 	const [noLegendaries, setNoLegendaries]  = useState(false);
-	const generationsWithExpansions = [...versions.genEight, ...versions.genNine];
-
-	const getData = () => fetch('https://pokeapi.co/api/v2/version?limit=50')
-		.then(response => response.json())
-		.then(data => {
-			return data;
-		});
+	const [returnData, setReturnData] = useState({});
+	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	
-	getData();
-
-	// const areSelectionsEmpty = () => {
-	// 	const flattenedFormData = Object.entries(formData.version);
-	// 	return !flattenedFormData.some(([key, value]) => Object.values(value).some(item => typeof item === 'boolean' && item))
-	// }
-
-	// const checkExpansion = (generation) => {
-	// 	if (typeof generation?.sword !== 'undefined') {
-	// 		return generation?.sword || generation?.shield
-	// 	}
-	// 	if (typeof generation?.scarlet !== 'undefined') {
-	// 		return generation?.scarlet || generation?.violet;
-	// 	}
-	// 	return true;
-	// }\
-
 	const renderExpansionCheckboxes = () => {
 		console.log(expansionsSelected)
 		if (selectedVersion === 'sword' || selectedVersion === 'shield') {
@@ -46,9 +25,8 @@ function App() {
 				<div>
 				<p>Include Expansions?</p>
 				{expansions.genEight.map(dlc => {
-					console.log('dlc: ', dlc)
 					return (
-					<FormControlLabel control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={camelToTitle(dlc)} value={expansionsSelected[dlc]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })} />
+					<FormControlLabel key={dlc} control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={camelToTitle(dlc)} value={expansionsSelected[dlc]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })} />
 				)})}
 				</div>
 			)
@@ -58,7 +36,7 @@ function App() {
 				<div>
 				<p>Include Expansions?</p>
 				{expansions.genNine.map(dlc => (
-					<FormControlLabel control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={camelToTitle(dlc)} value={expansionsSelected[dlc]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })} />
+					<FormControlLabel key={dlc} control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={camelToTitle(dlc)} value={expansionsSelected[dlc]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })} />
 				))}
 				</div>
 			)
@@ -77,7 +55,13 @@ function App() {
 
 	const generate = (event) => {
 		event.preventDefault();
-		// if all is selected, get all pokemon from those games
+		const regionName = Object.entries(versions).find(([versionName, versionData]) => versionData.includes(selectedVersion))[0];
+		fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(regionName)}?limit=50`)
+			.then(response => response.json())
+			.then(data => {
+				setReturnData(data);
+				console.log(data);
+			});
 	}; 
 
   return (
@@ -103,10 +87,11 @@ function App() {
 					</div>
 					<Button
 						variant="outlined"
-						// disabled={areSelectionsEmpty()}
+						disabled={selectedVersion === ""}
 						type="submit">Generate</Button>
 				</form>
 			</div>
+			{Object.keys(returnData).length !== 0 && (<Results returnData={returnData} version={selectedVersion} noLegendaries={noLegendaries} expansions={expansionsSelected} />)}
 		</div>
 
   );

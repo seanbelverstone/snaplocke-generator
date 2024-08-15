@@ -1,13 +1,20 @@
 const versions = {
-	genOne: ["red", "blue", "yellow"],
-	genTwo: ["gold", "silver", "crystal"],
-	genThree: ["ruby", "sapphire", "emerald", "fireRed", "leafGreen"],
-	genFour: ["diamond", "pearl", "platinum", "heartgold", "soulsilver"],
-	genFive: ["black", "white",	"blackTwo", "whiteTwo"],
-	genSix: ["x", "y", "omegaRuby", "alphaSapphire"],
-	genSeven: ["sun", "moon", "ultraSun", "ultraMoon", "letsGoPikachu", "letsGoEevee"], 
-	genEight: ["sword", "shield", "brilliantDiamond", "shiningPearl", "legendsArceus"],
-	genNine: ["scarlet", "violet"]
+	kanto: ["red", "blue", "yellow", "fireRed", "leafGreen"],
+	originalJohto: ["gold", "silver", "crystal"],
+	hoenn: ["ruby", "sapphire", "emerald"],
+	originalSinnoh: ["diamond", "pearl", "platinum"],
+	updatedJohto: ["heartgold", "soulsilver"],
+	originalUnova: ["black", "white"],
+	updatedUnova: ["blackTwo", "whiteTwo"],
+	kalos: ["x", "y"],
+	updatedHoenn: ["omegaRuby", "alphaSapphire"],
+	alola: ["sun", "moon"],
+	updatedAlola: ["ultraSun", "ultraMoon"],
+	letsgoKanto: ["letsGoPikachu", "letsGoEevee"], 
+	galar: ["sword", "shield"],
+	extendedSinnoh: ["brilliantDiamond", "shiningPearl"],
+	hisui: ["legendsArceus"],
+	paldea: ["scarlet", "violet"]
 }
 
 export const expansions = {
