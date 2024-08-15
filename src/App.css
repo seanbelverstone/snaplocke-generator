@@ -9,3 +9,9 @@
 	margin-bottom: 2em;
 	/* align-items: center; */
 }
+
+.error {
+	color: red;
+	text-decoration: underline;
+	font-weight: bold;
+}
