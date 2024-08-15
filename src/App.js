@@ -93,6 +93,16 @@ function App() {
 		return !flattenedFormData.some(([key, value]) => Object.values(value).some(item => typeof item === 'boolean' && item))
 	}
 
+	const checkExpansion = (generation) => {
+		if (typeof generation?.sword !== 'undefined') {
+			return generation?.sword || generation?.shield
+		}
+		if (typeof generation?.scarlet !== 'undefined') {
+			return generation?.scarlet || generation?.violet;
+		}
+		return true;
+	}
+
   return (
     <div className="page">
 			<h1>Snaplocke Generator</h1>
@@ -122,16 +132,17 @@ function App() {
 											)} />)
 								}
 								return (
-									<div>
+									<div className="expansionSection">
 										<span>Include Expansions?</span>
 										{Object.entries(value).map(([expName, expValue]) => {
 										if (expName !== 'expansions') {
 											return (
 											<FormControlLabel
 												key={expName}
+												disabled={!checkExpansion(formData.version[generationName])}
 												control={<Checkbox />}
 												label={camelToTitle(expName)}
-												value={formData.version[generationName].expansions[expName]}
+												value={checkExpansion(formData.version[generationName]) ? formData.version[generationName].expansions[expName] : false}
 												onChange={e => setFormData(
 													{ ...formData, version: {
 														...formData.version, [generationName]: {
