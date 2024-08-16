@@ -13,39 +13,39 @@ import { camelToHyphen } from './utils';
 
 function Results(props) {
 	const { dexData, version, noLegendaries, expansions } = props;
-	console.log(legendaries);
 	/* 
 		only show final evos
+		include pokemon that don't evolve from that game
 		add/subtract version exclusives
 		get pokemon details 
 		display all
 		animation of snap?
 		fade out half
 	*/
-
+	console.log(dexData);
 
 
 
 	useEffect(() => {
-		fetch(`https://pokeapi.co/api/v2/pokemon?limit=3000`)
-		.then(response => response.json())
-		.then(data => {
-			console.log(data);
-			fetch(`https://pokeapi.co/api/v2/evolution-chain/138`)
-			.then(evoResponse => evoResponse.json())
-			.then(evoData => {
-				console.log(evoData)
-			})
-			
-		});
-	}, [])
+
+			// fetch(`https://pokeapi.co/api/v2/evolution-chain`)
+			// .then(evoResponse => evoResponse.json())
+			// .then(evoData => {
+			// 	console.log(evoData)
+			// 	})
+			// });
+			console.log(dexData);
+	}, [dexData])
 
   return (
     <div className="results">
 			<h2>Results here!</h2>
-			{dexData?.pokemon_entries?.map(pokemon => (
+			{version === 'x' || version === 'y' || version === 'sun' || version === 'moon' || version === 'ultraSun' || version === 'ultraMoon' ?
+				Object.entries(dexData).map(([key, value]) => value.map(val => <p>{val.pokemon_species.name}</p>))
+			: dexData?.pokemon_entries?.map(pokemon => (
 				<p>{pokemon.pokemon_species.name}</p>
-			))}
+				))
+			}			
 		</div>
 
   );

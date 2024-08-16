@@ -44,6 +44,7 @@ function App() {
 	}
 
 	const handleChange = (e) => {
+		setDexData({});
 		setSelectedVersion(e.target.value)
 		setExpansionsSelected({
 			theIsleOfArmor: false,
@@ -56,12 +57,42 @@ function App() {
 	const getRegionalDex = (event) => {
 		event.preventDefault();
 		const regionName = Object.entries(versions).find(([versionName, versionData]) => versionData.includes(selectedVersion))[0];
-		fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(regionName)}?limit=50`)
-			.then(response => response.json())
-			.then(data => {
-				setDexData(data);
-				console.log(data);
-			});
+		if (selectedVersion === 'x' || selectedVersion === 'y') {
+			const kalosData = { central: [], coastal: [], mountain: [] };
+			const kalosAreas = ['central', 'coastal', 'mountain'];
+			const fetchData = new Promise((resolve, reject) => {
+				kalosAreas.forEach(area => {
+					fetch(`https://pokeapi.co/api/v2/pokedex/kalos-${area}?limit=50`)
+					.then(response => response.json())
+					.then(data => {
+						kalosData[area] = data.pokemon_entries
+						resolve(kalosData);
+					})
+				})
+			})
+			Promise.resolve(fetchData).then(value => setDexData(value));
+		} else if (selectedVersion === 'sun' || selectedVersion === 'moon' || selectedVersion === 'ultraSun' || selectedVersion === 'ultraMoon') {
+			const updatedVersion = selectedVersion === 'sun' || selectedVersion === 'moon';
+			const alolaData = { alola: [], melemele: [], akala: [], ulaula: [], poni: []};
+			const alolaAreas = ['alola', 'melemele', 'akala', 'ulaula', 'poni'];
+			const fetchData = new Promise((resolve, reject) => {
+				alolaAreas.forEach(area => {
+					fetch(`https://pokeapi.co/api/v2/pokedex/${updatedVersion ? 'updated' : 'original'}-${area}?limit=50`)
+					.then(response => response.json())
+					.then(data => {
+						alolaData[area] = data.pokemon_entries
+						resolve(alolaData);
+					})
+				})
+			})
+			Promise.resolve(fetchData).then(value => setDexData(value));
+		} else {
+			fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(regionName)}?limit=50`)
+				.then(response => response.json())
+				.then(data => {
+					setDexData(data);
+				});
+		}
 	}; 
 
   return (
