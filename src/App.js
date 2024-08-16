@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Checkbox, FormControlLabel, InputLabel, MenuItem, Select } from '@mui/material';
 import './App.css';
 import camelToTitle, { camelToHyphen } from './utils';
-import versions, { expansions } from './versions';
+import versions, { expansions } from './gameData';
 import Results from './Results';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
 		theIndigoDisk: false
 	});
 	const [noLegendaries, setNoLegendaries]  = useState(false);
-	const [returnData, setReturnData] = useState({});
+	const [dexData, setDexData] = useState({});
 	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	
 	const renderExpansionCheckboxes = () => {
@@ -53,13 +53,13 @@ function App() {
 		})
 	}
 
-	const generate = (event) => {
+	const getRegionalDex = (event) => {
 		event.preventDefault();
 		const regionName = Object.entries(versions).find(([versionName, versionData]) => versionData.includes(selectedVersion))[0];
 		fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(regionName)}?limit=50`)
 			.then(response => response.json())
 			.then(data => {
-				setReturnData(data);
+				setDexData(data);
 				console.log(data);
 			});
 	}; 
@@ -67,7 +67,7 @@ function App() {
   return (
     <div className="page">
 			<h1>Snaplocke Generator</h1>
-			<div id="form" onSubmit={generate}>
+			<div id="form" onSubmit={getRegionalDex}>
 				<form>
 					<InputLabel id="demo-simple-select-label">Version</InputLabel>
 					<Select
@@ -91,7 +91,7 @@ function App() {
 						type="submit">Generate</Button>
 				</form>
 			</div>
-			{Object.keys(returnData).length !== 0 && (<Results returnData={returnData} version={selectedVersion} noLegendaries={noLegendaries} expansions={expansionsSelected} />)}
+			{Object.keys(dexData).length !== 0 && (<Results dexData={dexData} version={selectedVersion} noLegendaries={noLegendaries} expansions={expansionsSelected} />)}
 		</div>
 
   );
