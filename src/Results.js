@@ -22,7 +22,7 @@ function Results(props) {
 		animation of snap?
 		fade out half
 	*/
-	console.log(dexData);
+	console.log(dexData.pokemon_entries.map(item => item.pokemon_species.name));
 
 
 
