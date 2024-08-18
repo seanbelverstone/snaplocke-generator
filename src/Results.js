@@ -28,13 +28,14 @@ function Results(props) {
 
 	useEffect(() => {
 
-			// fetch(`https://pokeapi.co/api/v2/evolution-chain`)
-			// .then(evoResponse => evoResponse.json())
-			// .then(evoData => {
-			// 	console.log(evoData)
-			// 	})
+			fetch(`https://pokeapi.co/api/v2/evolution-chain?limit=5000`)
+			.then(evoResponse => evoResponse.json())
+			.then(evoData => {
+				console.log(evoData)
+				// evoData.results.filter(line => )
+				})
 			// });
-			console.log(dexData);
+			// console.log(dexData);
 	}, [dexData])
 
   return (

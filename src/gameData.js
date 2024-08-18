@@ -23,9 +23,9 @@ export const expansions = {
 }
 
 export const legendaries = {
-	red: ["articuno", "zapdos", "moltres", "mewtwo", "mew"],
-	blue: ["articuno", "zapdos", "moltres", "mewtwo", "mew"],
-	yellow: ["articuno", "zapdos", "moltres", "mewtwo", "mew"],
+	red: ["articuno", "zapdos", "moltres", "mewtwo"],
+	blue: ["articuno", "zapdos", "moltres", "mewtwo"],
+	yellow: ["articuno", "zapdos", "moltres", "mewtwo"],
 	gold: ["raikou", "entei", "suicune", "lugia", "ho-oh"],
 	silver: ["raikou", "entei", "suicune", "lugia", "ho-oh"],
 	crystal: ["raikou", "entei", "suicune", "lugia", "ho-oh", "celebi"],
@@ -69,26 +69,51 @@ export const legendaries = {
 	theIndigoDisk: ["terapagos", "pecharunt"]
 }
 
-export const pokemonNoEvo = {
-	kanto: ["onix", "lickitung", "tangela", "scyther", "electabuzz", "magmar", "porygon", "chansey", "kangaskhan", "pinsir", "tauros", "lapras", "ditto", "aerodactyl", ...legendaries.red],
-	originalJohto: ["unown", "shuckle", "heracross", "delibird", "skarmory", "smeargle", "miltank", "aipom", "yanma", "murkrow", "misdreavus", "gligar", "sneasel", ...legendaries.crystal],
-	hoenn: ["nosepass", "roselia", "sableye", "mawile", "plusle", "minun", "volbeat", "illumise", "torkoal", "spinda", "zangoose", "seviper", "lunatone", "solrock", "castform", "kecleon", "tropius", "absol", "relicanth", "luvdisc", ...legendaries.emerald, "jirachi", "deoxys"],
-	updatedKanto: ["kangaskhan", "pinsir", "tauros", "lapras", "ditto", "aerodactyl", ...legendaries.red],
-	originalSinnoh: ["pachirisu", "chatot", "spiritomb", "carnivine", "rotom", ...legendaries.platinum, "phione", "manaphy", "darkrai", "shaymin", "arceus"],
-	updatedJohto: ["victini", "audino", "throh", "sawk", "maractus", "sigilyph", "emolga", "alomomola", "cryogonal", "stunfisk", "druddigon", "bouffalant", "heatmor", "durant", ...legendaries.black, "thundurus", "zekrom", "keldeo", "meloetta", "genesect"],
-	originalUnova: [],
-	updatedUnova: [],
-	kalos: [],
-	updatedHoenn: [],
-	alola: [],
-	updatedAlola: [],
-	letsgoKanto: [], 
-	galar: [],
-	extendedSinnoh: [],
-	hisui: [],
-	paldea: []
+export const finalStagesAvailable = {
+	red: ["venusaur", "charizard", "blastoise", "butterfree", "beedrill", "pidgeot", "raticate", "fearow", "arbok", "raichu", "nidoqueen", "nidoking", "clefable", "wigglytuff", "golbat", "vileplume", "parasect", "venomoth", "dugtrio", "golduck", "primeape", "arcanine", "poliwrath", "alakazam", "machamp", "tentacruel", "golem", "rapidash", "slowbro", "magneton", "farfetchd", "dodrio", "dewgong", "muk", "cloyster", "gengar", "onix", "hypno", "kingler", "electrode", "exeggutor", "marowak", "hitmonlee", "hitmonchan", "lickitung", "weezing", "rhydon", "chansey", "tangela", "kangaskhan", "seadra", "seaking", "starmie", "mr.mime", "scyther", "jynx", "electabuzz", "tauros", "gyarados", "lapras", "ditto", "vaporeon", "jolteon", "flareon", "porygon", "omastar", "kabutops", "aerodactyl", "snorlax", "dragonite", ...legendaries.blue],
+	blue: ["venusaur", "charizard", "blastoise", "butterfree", "beedrill", "pidgeot", "raticate", "fearow", "raichu", "sandslash", "nidoqueen", "nidoking", "clefable", "ninetales", "wigglytuff", "golbat", "parasect", "venomoth", "dugtrio", "persian", "golduck", "poliwrath", "alakazam", "machamp", "victreebel", "tentacruel", "golem", "rapidash", "slowbro", "magneton", "farfetchd", "dodrio", "dewgong", "muk", "cloyster", "gengar", "onix", "hypno", "kingler", "electrode", "exeggutor", "marowak", "hitmonlee", "hitmonchan", "lickitung", "weezing", "rhydon", "chansey", "tangela", "kangaskhan", "seadra", "seaking", "starmie", "mr.mime", "jynx", "magmar", "pinsir", "tauros", "gyarados", "lapras", "ditto", "vaporeon", "jolteon", "flareon", "porygon", "omastar", "kabutops", "aerodactyl", "snorlax", "dragonite", ...legendaries.red],
+	yellow: ["venusaur", "charizard", "blastoise", "butterfree", "pidgeot", "raticate", "fearow", "pikachu", "sandslash", "nidoqueen", "nidoking", "clefable", "ninetales", "wigglytuff", "golbat", "vileplume", "parasect", "venomoth", "dugtrio", "golduck", "primeape", "arcanine", "poliwrath", "alakazam", "machamp", "victreebel", "tentacruel", "golem", "rapidash", "slowbro", "magneton", "farfetchd", "dodrio", "dewgong", "muk", "cloyster", "gengar", "onix", "hypno", "kingler", "electrode", "exeggutor", "marowak", "hitmonlee", "hitmonchan", "lickitung", "rhydon", "chansey", "tangela", "kangaskhan", "seadra", "seaking", "starmie", "mr.mime", "scyther", "pinsir", "tauros", "gyarados", "lapras", "ditto", "vaporeon", "jolteon", "flareon", "porygon", "omastar", "kabutops", "aerodactyl", "snorlax", "dragonite", ...legendaries.yellow],
+	gold: [],
+	silver: [],
+	crystal: [],
+	ruby: [],
+	sapphire: [],
+	emerald: [],
+	fireRed: [],
+	leafGreen: [],
+	diamond: [],
+	pearl: [],
+	platinum: [],
+	heartGold: [],
+	soulSilver: [],
+	black: [],
+	white: [],
+	blackTwo: [],
+	whiteTwo: [],
+	x: [],
+	y: [],
+	omegaRuby: [],
+	alphaSapphire: [],
+	sun: [],
+	moon: [],
+	ultraSun: [],
+	ultraMoon: [],
+	letsGoPikachu: [],
+	letsGoEevee: [],
+	sword: [],
+	shield: [],
+	isleOfArmor: [],
+	crownOfTundra: {
+		sword: [],
+		shield: []
+	},
+	brilliantDiamond: [],
+	shiningPearl: [],
+	legendsArceus: [],
+	scarlet: [],
+	violet: [],
+	theTealMask: [],
+	theIndigoDisk: []
 }
-
-// do i need this?
 
 export default versions;
