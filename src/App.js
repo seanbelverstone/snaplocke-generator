@@ -9,8 +9,8 @@ function App() {
 
 	const [selectedVersion, setSelectedVersion] = useState("");
 	const [expansionsSelected, setExpansionsSelected] = useState({
-		theIsleOfArmor: false,
-		theCrownTundra: false,
+		isleOfArmor: false,
+		crownTundra: false,
 		theTealMask: false,
 		theIndigoDisk: false
 	});
@@ -19,7 +19,6 @@ function App() {
 	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	
 	const renderExpansionCheckboxes = () => {
-		console.log(expansionsSelected)
 		if (selectedVersion === 'sword' || selectedVersion === 'shield') {
 			return (
 				<div>
@@ -47,8 +46,8 @@ function App() {
 		setDexData({});
 		setSelectedVersion(e.target.value)
 		setExpansionsSelected({
-			theIsleOfArmor: false,
-			theCrownTundra: false,
+			isleOfArmor: false,
+			crownTundra: false,
 			theTealMask: false,
 			theIndigoDisk: false
 		})
@@ -57,6 +56,7 @@ function App() {
 	const getRegionalDex = (event) => {
 		event.preventDefault();
 		const regionName = Object.entries(versions).find(([versionName, versionData]) => versionData.includes(selectedVersion))[0];
+		const expansionNames = Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item); // returns the expansion name only if true
 		if (selectedVersion === 'x' || selectedVersion === 'y') {
 			const kalosData = { central: [], coastal: [], mountain: [] };
 			const kalosAreas = ['central', 'coastal', 'mountain'];
@@ -70,7 +70,7 @@ function App() {
 					})
 				})
 			})
-			Promise.resolve(fetchData).then(value => setDexData(value));
+			return Promise.resolve(fetchData).then(value => setDexData(value));
 		} else if (selectedVersion === 'sun' || selectedVersion === 'moon' || selectedVersion === 'ultraSun' || selectedVersion === 'ultraMoon') {
 			const updatedVersion = selectedVersion === 'sun' || selectedVersion === 'moon';
 			const alolaData = { alola: [], melemele: [], akala: [], ulaula: [], poni: []};
@@ -85,7 +85,28 @@ function App() {
 					})
 				})
 			})
-			Promise.resolve(fetchData).then(value => setDexData(value));
+			return Promise.resolve(fetchData).then(value => setDexData(value));
+		} else if (expansionNames.length > 0) { // if expansion selected
+			const expansionData = {};
+			const fetchExpansionData = new Promise((resolve, reject) => {
+				expansionNames.forEach(expansion => {
+					fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(expansion)}?limit=50`)
+					.then(response => response.json())
+					.then(data => {
+						expansionData[expansion] = data.pokemon_entries
+						resolve(expansionData);
+					})
+				})
+			})
+			const fetchData = new Promise((resolve, reject) => {
+			fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(regionName)}?limit=50`)
+				.then(response => response.json())
+				.then(data => {
+					expansionData[regionName] = data.pokemon_entries
+					resolve(expansionData);
+				})
+			})
+			return Promise.all([fetchData, fetchExpansionData]).then(value => setDexData(expansionData));
 		} else {
 			fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(regionName)}?limit=50`)
 				.then(response => response.json())
@@ -122,7 +143,7 @@ function App() {
 						type="submit">Generate</Button>
 				</form>
 			</div>
-			{Object.keys(dexData).length !== 0 && (<Results dexData={dexData} version={selectedVersion} noLegendaries={noLegendaries} expansions={expansionsSelected} />)}
+			{Object.keys(dexData).length !== 0 && (<Results dexData={dexData} version={selectedVersion} noLegendaries={noLegendaries} expansions={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
 		</div>
 
   );

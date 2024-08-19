@@ -22,11 +22,10 @@ function Results(props) {
 		animation of snap?
 		fade out half
 	*/
-	// console.log(dexData.pokemon_entries.map(item => item.pokemon_species.name));
 
 	useEffect(() => {
 
-			fetch(`https://pokeapi.co/api/v2/evolution-chain?limit=5000`)
+			fetch(`https://pokeapi.co/api/v2/pokedex?limit=50`)
 			.then(evoResponse => evoResponse.json())
 			.then(evoData => {
 				console.log(evoData)
@@ -39,7 +38,7 @@ function Results(props) {
   return (
     <div className="results">
 			<h2>Results here!</h2>
-			{version === 'x' || version === 'y' || version === 'sun' || version === 'moon' || version === 'ultraSun' || version === 'ultraMoon' ?
+			{version === 'x' || version === 'y' || version === 'sun' || version === 'moon' || version === 'ultraSun' || version === 'ultraMoon' || expansions.length > 0 ?
 				Object.entries(dexData).map(([key, value]) => value.map(val => <p>{val.pokemon_species.name}</p>))
 			: dexData?.pokemon_entries?.map(pokemon => (
 				<p>{pokemon.pokemon_species.name}</p>
