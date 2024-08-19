@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, FormControlLabel, InputLabel, MenuItem, Select } from '@mui/material';
 import './App.css';
-import camelToTitle, { camelToHyphen } from './utils';
+import camelToTitle from './utils';
 import versions, { expansions } from './gameData';
 import Results from './Results';
 
@@ -15,7 +15,7 @@ function App() {
 		blueberry: false // indigo disk
 	});
 	const [noLegendaries, setNoLegendaries]  = useState(false);
-	const [dexData, setDexData] = useState({});
+	const [submitted, setSubmitted] = useState(false);
 	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	
 	const renderExpansionCheckboxes = () => {
@@ -43,7 +43,7 @@ function App() {
 	}
 
 	const handleChange = (e) => {
-		setDexData({});
+		setSubmitted(false);
 		setSelectedVersion(e.target.value)
 		setExpansionsSelected({
 			isleOfArmor: false,
@@ -53,73 +53,20 @@ function App() {
 		})
 	}
 
-	const getRegionalDex = (event) => {
-		event.preventDefault();
-		const regionName = Object.entries(versions).find(([versionName, versionData]) => versionData.includes(selectedVersion))[0];
-		const expansionNames = Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item); // returns the expansion name only if true
-		if (selectedVersion === 'x' || selectedVersion === 'y') {
-			const kalosData = { central: [], coastal: [], mountain: [] };
-			const kalosAreas = ['central', 'coastal', 'mountain'];
-			const fetchData = new Promise((resolve, reject) => {
-				kalosAreas.forEach(area => {
-					fetch(`https://pokeapi.co/api/v2/pokedex/kalos-${area}?limit=50`)
-					.then(response => response.json())
-					.then(data => {
-						kalosData[area] = data.pokemon_entries
-						resolve(kalosData);
-					})
-				})
-			})
-			return Promise.resolve(fetchData).then(value => setDexData(value));
-		} else if (selectedVersion === 'sun' || selectedVersion === 'moon' || selectedVersion === 'ultraSun' || selectedVersion === 'ultraMoon') {
-			const updatedVersion = selectedVersion === 'sun' || selectedVersion === 'moon';
-			const alolaData = { alola: [], melemele: [], akala: [], ulaula: [], poni: []};
-			const alolaAreas = ['alola', 'melemele', 'akala', 'ulaula', 'poni'];
-			const fetchData = new Promise((resolve, reject) => {
-				alolaAreas.forEach(area => {
-					fetch(`https://pokeapi.co/api/v2/pokedex/${updatedVersion ? 'updated' : 'original'}-${area}?limit=50`)
-					.then(response => response.json())
-					.then(data => {
-						alolaData[area] = data.pokemon_entries
-						resolve(alolaData);
-					})
-				})
-			})
-			return Promise.resolve(fetchData).then(value => setDexData(value));
-		} else if (expansionNames.length > 0) { // if expansion selected
-			const expansionData = {};
-			const fetchExpansionData = new Promise((resolve, reject) => {
-				expansionNames.forEach(expansion => {
-					fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(expansion)}?limit=50`)
-					.then(response => response.json())
-					.then(data => {
-						expansionData[expansion] = data.pokemon_entries
-						resolve(expansionData);
-					})
-				})
-			})
-			const fetchData = new Promise((resolve, reject) => {
-			fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(regionName)}?limit=50`)
-				.then(response => response.json())
-				.then(data => {
-					expansionData[regionName] = data.pokemon_entries
-					resolve(expansionData);
-				})
-			})
-			return Promise.all([fetchData, fetchExpansionData]).then(value => setDexData(expansionData));
-		} else {
-			fetch(`https://pokeapi.co/api/v2/pokedex/${camelToHyphen(regionName)}?limit=50`)
-				.then(response => response.json())
-				.then(data => {
-					setDexData(data);
-				});
-		}
-	}; 
+	const handleSetLegendaries = (e) => {
+		setSubmitted(false);
+		setNoLegendaries(e.target.checked)
+	}
+
+	const submit = (e) => {
+		e.preventDefault();
+		setSubmitted(true);
+	}
 
   return (
     <div className="page">
 			<h1>Snaplocke Generator</h1>
-			<div id="form" onSubmit={getRegionalDex}>
+			<div id="form" onSubmit={submit}>
 				<form>
 					<InputLabel id="demo-simple-select-label">Version</InputLabel>
 					<Select
@@ -135,7 +82,7 @@ function App() {
 
 
 					<div className="misc">
-						<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={e => setNoLegendaries(e.target.checked)} />
+						<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
 					</div>
 					<Button
 						variant="outlined"
@@ -143,7 +90,7 @@ function App() {
 						type="submit">Generate</Button>
 				</form>
 			</div>
-			{Object.keys(dexData).length !== 0 && (<Results dexData={dexData} version={selectedVersion} noLegendaries={noLegendaries} expansions={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
+			{submitted && (<Results submitted={submitted} version={selectedVersion} noLegendaries={noLegendaries} expansions={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
 		</div>
 
   );

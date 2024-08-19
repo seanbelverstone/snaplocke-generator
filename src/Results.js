@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import versions, { legendaries } from './gameData';
-import { camelToHyphen } from './utils';
+import { legendaries, pokemonPerVersion } from './gameData';
+import camelToTitle from './utils';
 
 /* this page will list out the pokemon in different layouts:
  - basic
@@ -12,38 +12,52 @@ import { camelToHyphen } from './utils';
 */
 
 function Results(props) {
-	const { dexData, version, noLegendaries, expansions } = props;
+	const { submitted, version, noLegendaries, expansions } = props;
+	const [pokemon, setPokemon] = useState([]);
+	const [pokemonDetails, setPokemonDetails] = useState({});
+	const [dataComplete, setDataComplete] = useState(false);
 	/* 
-		only show final evos
-		include pokemon that don't evolve from that game
-		add/subtract version exclusives
-		get pokemon details 
 		display all
 		animation of snap?
 		fade out half
 	*/
 
 	useEffect(() => {
+		setDataComplete(false);
+		getSprites();
+	}, [submitted])
 
-			fetch(`https://pokeapi.co/api/v2/pokedex?limit=50`)
-			.then(evoResponse => evoResponse.json())
-			.then(evoData => {
-				console.log(evoData)
-				// evoData.results.filter(line => )
+	const getSprites = () => {
+		const pokemonList = noLegendaries ? pokemonPerVersion[version] : [...pokemonPerVersion[version], ...legendaries[version]];
+		setPokemon(pokemonList)
+		const spriteObj = {};
+		const spritePromise = new Promise((resolve, reject) => {
+			pokemonList.forEach(name => {
+				fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+					.then(response => response.json())
+					.then(data => {
+						spriteObj[name] = data;
+						resolve(spriteObj);
+					});
 				})
-			// });
-			// console.log(dexData);
-	}, [dexData])
+			})
+			Promise.resolve(spritePromise).then(async value => {
+				setPokemonDetails(value)
+				setDataComplete(true);
+		});
+	}
 
   return (
     <div className="results">
 			<h2>Results here!</h2>
-			{version === 'x' || version === 'y' || version === 'sun' || version === 'moon' || version === 'ultraSun' || version === 'ultraMoon' || expansions.length > 0 ?
-				Object.entries(dexData).map(([key, value]) => value.map(val => <p>{val.pokemon_species.name}</p>))
-			: dexData?.pokemon_entries?.map(pokemon => (
-				<p>{pokemon.pokemon_species.name}</p>
-				))
-			}			
+			<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+				{dataComplete && pokemon.map(name => (
+					<div id="card" key={name}>
+						<img style={{ maxWidth: '96px', maxHeight: '96px' }} src={pokemonDetails[name]?.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${name} in their default front sprite`}/>
+						<p>{camelToTitle(name)}</p>
+					</div>
+					))}
+			</div>
 		</div>
 
   );
