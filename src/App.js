@@ -11,8 +11,8 @@ function App() {
 	const [expansionsSelected, setExpansionsSelected] = useState({
 		isleOfArmor: false,
 		crownTundra: false,
-		theTealMask: false,
-		theIndigoDisk: false
+		kitakami: false, // teal mask
+		blueberry: false // indigo disk
 	});
 	const [noLegendaries, setNoLegendaries]  = useState(false);
 	const [dexData, setDexData] = useState({});
@@ -35,7 +35,7 @@ function App() {
 				<div>
 				<p>Include Expansions?</p>
 				{expansions.genNine.map(dlc => (
-					<FormControlLabel key={dlc} control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={camelToTitle(dlc)} value={expansionsSelected[dlc]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })} />
+					<FormControlLabel key={dlc.name} control={<Checkbox checked={expansionsSelected[dlc.route] || false} />} label={camelToTitle(dlc.name)} value={expansionsSelected[dlc.route]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc.route]: e.target.checked })} />
 				))}
 				</div>
 			)
@@ -48,8 +48,8 @@ function App() {
 		setExpansionsSelected({
 			isleOfArmor: false,
 			crownTundra: false,
-			theTealMask: false,
-			theIndigoDisk: false
+			kitakami: false,
+			blueberry: false
 		})
 	}
 
