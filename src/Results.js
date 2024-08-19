@@ -23,6 +23,7 @@ function Results(props) {
 		fade out half
 	*/
 	// console.log(dexData.pokemon_entries.map(item => item.pokemon_species.name));
+	console.log(dexData);
 
 
 
