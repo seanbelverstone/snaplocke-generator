@@ -17,44 +17,37 @@ function Results(props) {
 	const [pokemonDetails, setPokemonDetails] = useState({});
 	const [dataComplete, setDataComplete] = useState(false);
 	/* 
-		display all
-		animation of snap?
-		fade out half
+		click a button to snap	
+		animation of snap - fade out half
 	*/
 
 	useEffect(() => {
 		setDataComplete(false);
 		getSprites();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [submitted])
 
-	const getSprites = () => {
+	const getSprites = async () => {
 		const pokemonList = noLegendaries ? pokemonPerVersion[version] : [...pokemonPerVersion[version], ...legendaries[version]];
 		setPokemon(pokemonList)
-		const spriteObj = {};
-		const spritePromise = new Promise((resolve, reject) => {
-			pokemonList.forEach(name => {
-				fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
-					.then(response => response.json())
-					.then(data => {
-						spriteObj[name] = data;
-						resolve(spriteObj);
-					});
-				})
-			})
-			Promise.resolve(spritePromise).then(async value => {
-				setPokemonDetails(value)
-				setDataComplete(true);
-		});
+		const spritePromise = pokemonList.map(async name => {
+			return await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+				.then(response => response.json())
+				.then(data => ({name: name, data: data}))
+			});
+			const resolvedPromises = await Promise.all(spritePromise);
+			setPokemonDetails(resolvedPromises)
+			setDataComplete(true);
 	}
 
   return (
     <div className="results">
 			<h2>Results here!</h2>
 			<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-				{dataComplete && pokemon.map(name => (
-					<div id="card" key={name}>
-						<img style={{ maxWidth: '96px', maxHeight: '96px' }} src={pokemonDetails[name]?.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${name} in their default front sprite`}/>
-						<p>{camelToTitle(name)}</p>
+				{dataComplete && pokemonDetails?.map(pokemon => (
+					<div id="card" key={pokemon.name}>
+						<img style={{ maxWidth: '96px', maxHeight: '96px', imageRendering: 'pixelated' }} src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
+						<p>{camelToTitle(pokemon.name)}</p>
 					</div>
 					))}
 			</div>
