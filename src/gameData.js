@@ -131,7 +131,3 @@ export const pokemonPerVersion = {
 	}
 }
 export default versions;
-
-
-/*
-*/
