@@ -57,7 +57,7 @@ function Results(props) {
 		for (let i = newPokemonList.length; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
 			deletedPokemonList.push(newPokemonList.splice(Math.floor(Math.random() * newPokemonList.length), 1));
 		}
-		
+
 		setDeletedPokemon(deletedPokemonList.flatMap(val => val).map(mon => mon.name));
 		setAnimation('fade 2s forwards');
 		setSnapped(true);
@@ -93,6 +93,15 @@ function Results(props) {
 				{dataComplete && pokemonDetails?.map(pokemon => (
 					<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
 					))}
+				{snapped && (
+					<Button
+					variant="contained"
+					color="success"
+					style={{ width: '100%', margin: '10px 0' }}
+					>
+					Export List
+					</Button>
+				)}
 			</div>
 		</div>
 

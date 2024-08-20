@@ -13,6 +13,13 @@ code {
 }
 
 @keyframes fade {
-  0%{ opacity: 1 }
-  100%  { opacity: 0 }
+  0% {
+		filter: blur(0);
+    opacity: 1;
+	}
+  100% {
+		filter: blur(50px);
+    opacity: 0;
+	}
+	
 }
