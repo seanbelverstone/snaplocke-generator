@@ -71,37 +71,30 @@ function Results(props) {
   return (
     <div className="results" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
-				<Button
-					variant="outlined"
-					onClick={snap}
-					style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
-					disabled={snapped}
-					>
-						{snapped ? (
-							<>
-								<img id="img" src={thanos} alt="thanos" style={{ maxWidth: '192px' }} />
-								<span style={{ color: 'red' }}>I AM INEVITABLE</span>
-							</>
-						) : (
-							<>
-								<img src={snapImage} alt="The Infinity Gauntlet in a snapping pose." style={{ maxWidth: '192px' }} />
-								<span>REMOVE HALF</span>
-							</>
-						)}
-
-				</Button>
-				{dataComplete && pokemonDetails?.map(pokemon => (
-					<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
-					))}
-				{snapped && (
+				{!snapped ? (
 					<Button
-					variant="contained"
-					color="success"
-					style={{ width: '100%', margin: '10px 0' }}
+						variant="outlined"
+						onClick={snap}
+						style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+						disabled={snapped}
+					>
+						<img src={snapImage} alt="The Infinity Gauntlet in a snapping pose." style={{ maxWidth: '192px' }} />
+						<span>REMOVE HALF</span>
+					</Button>
+
+				) : (
+					<Button
+						variant="contained"
+						color="success"
+						style={{ width: '100%', margin: '10px 0' }}
 					>
 					Export List
 					</Button>
-				)}
+					)}
+
+				{dataComplete && pokemonDetails?.map(pokemon => (
+					<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
+					))}
 			</div>
 		</div>
 

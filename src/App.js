@@ -68,29 +68,33 @@ function App() {
     <div className="page">
 			{/* <h1>Snaplocke Generator</h1> */}
 			<img src={snaplockeLogo} alt="Snaplocke Generator logo" style={{ width: '100%' }} />
-			<div id="form" onSubmit={submit}>
-				<form>
-					<InputLabel id="demo-simple-select-label">Version</InputLabel>
-					<Select
-						labelId="version"
-						id="version"
-						value={selectedVersion || ""}
-						label="Age"
-						onChange={handleChange}
-					>
-						{Object.entries(versions).map(([generationName, generationValue]) => generationValue.map(val => (<MenuItem key={val} value={val || ""}>{camelToTitle(val)}</MenuItem>)))}
-					</Select>
-					{generationsWithExpansions.includes(selectedVersion) && renderExpansionCheckboxes()}
+			<div id="form" style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px' }}>
+				<InputLabel id="demo-simple-select-label">Version</InputLabel>
+				<Select
+					labelId="version"
+					id="version"
+					value={selectedVersion || ""}
+					label="Age"
+					onChange={handleChange}
+					style={{ width: '25%' }}
+				>
+					{Object.entries(versions).map(([generationName, generationValue]) => generationValue.map(val => (<MenuItem key={val} value={val || ""}>{camelToTitle(val)}</MenuItem>)))}
+				</Select>
+				{generationsWithExpansions.includes(selectedVersion) && renderExpansionCheckboxes()}
 
 
-					<div className="misc">
-						<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
-					</div>
-					<Button
-						variant="outlined"
-						disabled={selectedVersion === ""}
-						type="submit">Generate</Button>
-				</form>
+				<div className="misc">
+					<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
+				</div>
+				<Button
+					variant="contained"
+					disabled={selectedVersion === "" || submitted}
+					type="submit"
+					style={{ height: '100px', width: '100px' }}
+					onClick={submit}
+				>
+				Generate
+				</Button>
 			</div>
 			{submitted && (<Results submitted={submitted} version={selectedVersion} noLegendaries={noLegendaries} expansions={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
 		</div>
