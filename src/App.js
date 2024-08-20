@@ -4,6 +4,7 @@ import './App.css';
 import camelToTitle from './utils';
 import versions, { expansions } from './gameData';
 import Results from './Results';
+import snaplockeLogo from './assets/snaplockeLogo.png';
 
 function App() {
 
@@ -65,7 +66,8 @@ function App() {
 
   return (
     <div className="page">
-			<h1>Snaplocke Generator</h1>
+			{/* <h1>Snaplocke Generator</h1> */}
+			<img src={snaplockeLogo} alt="Snaplocke Generator logo" style={{ width: '100%' }} />
 			<div id="form" onSubmit={submit}>
 				<form>
 					<InputLabel id="demo-simple-select-label">Version</InputLabel>

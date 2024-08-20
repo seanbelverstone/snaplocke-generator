@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { legendaries, pokemonPerVersion } from './gameData';
-import camelToTitle from './utils';
 import { Button } from '@mui/material';
 import snapImage from './assets/snap.png';
 import thanos from './assets/thanos.jpeg';
+import PokemonCard from './PokemonCard';
+import snapSound from './assets/snapSound.mp3';
 
 /* this page will list out the pokemon in different layouts:
  - basic
@@ -19,6 +20,8 @@ function Results(props) {
 	const [pokemon, setPokemon] = useState([]);
 	const [pokemonDetails, setPokemonDetails] = useState([]);
 	const [dataComplete, setDataComplete] = useState(false);
+	const [deletedPokemon, setDeletedPokemon] = useState([]);
+	const [animation, setAnimation] = useState('none');
 	const [snapped, setSnapped] = useState(false);
 	/* 
 		click a button to snap	
@@ -46,17 +49,23 @@ function Results(props) {
 	}
 
 	const snap = () => {
-		// play snap sound
+		const audio = new Audio(snapSound);
+		audio.play();
+
 		const newPokemonList = [ ...pokemonDetails ];
+		const deletedPokemonList = [];
 		for (let i = newPokemonList.length; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
-			newPokemonList.splice(Math.floor(Math.random() * newPokemonList.length), 1);
+			deletedPokemonList.push(newPokemonList.splice(Math.floor(Math.random() * newPokemonList.length), 1));
 		}
-		// before setting new list:
-		// find names in the window and append a class with animation for dissolve
-		// items removed from list get dissolve (dust?) effect applied
-		// then new list is set
-		setPokemonDetails(newPokemonList);
+
+		setDeletedPokemon(deletedPokemonList.flatMap(val => val).map(mon => mon.name));
+		setAnimation('fade 2s forwards');
 		setSnapped(true);
+		setTimeout(() => {
+			setPokemonDetails(newPokemonList);
+			setAnimation('none');
+		}, 2000)
+
 	};
 
   return (
@@ -70,7 +79,7 @@ function Results(props) {
 					>
 						{snapped ? (
 							<>
-								<img src={thanos} alt="thanos" style={{ maxWidth: '192px' }} />
+								<img id="img" src={thanos} alt="thanos" style={{ maxWidth: '192px' }} />
 								<span style={{ color: 'red' }}>I AM INEVITABLE</span>
 							</>
 						) : (
@@ -82,11 +91,17 @@ function Results(props) {
 
 				</Button>
 				{dataComplete && pokemonDetails?.map(pokemon => (
-					<div id="card" key={pokemon.name} className={pokemon.name}>
-						<img style={{ maxWidth: '96px', maxHeight: '96px', imageRendering: 'pixelated' }} src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
-						<p>{camelToTitle(pokemon.name)}</p>
-					</div>
+					<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
 					))}
+				{snapped && (
+					<Button
+					variant="contained"
+					color="success"
+					style={{ width: '100%', margin: '10px 0' }}
+					>
+					Export List
+					</Button>
+				)}
 			</div>
 		</div>
 
