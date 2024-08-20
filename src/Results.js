@@ -46,12 +46,15 @@ function Results(props) {
 	}
 
 	const snap = () => {
+		// play snap sound
 		const newPokemonList = [ ...pokemonDetails ];
 		for (let i = newPokemonList.length; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
 			newPokemonList.splice(Math.floor(Math.random() * newPokemonList.length), 1);
 		}
-		console.log(pokemonDetails.length);
-		console.log(newPokemonList.length, newPokemonList);
+		// before setting new list:
+		// find names in the window and append a class with animation for dissolve
+		// items removed from list get dissolve (dust?) effect applied
+		// then new list is set
 		setPokemonDetails(newPokemonList);
 		setSnapped(true);
 	};
@@ -79,7 +82,7 @@ function Results(props) {
 
 				</Button>
 				{dataComplete && pokemonDetails?.map(pokemon => (
-					<div id="card" key={pokemon.name}>
+					<div id="card" key={pokemon.name} className={pokemon.name}>
 						<img style={{ maxWidth: '96px', maxHeight: '96px', imageRendering: 'pixelated' }} src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
 						<p>{camelToTitle(pokemon.name)}</p>
 					</div>
