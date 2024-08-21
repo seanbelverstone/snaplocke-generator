@@ -5,6 +5,7 @@ import camelToTitle from './utils';
 import versions, { expansions } from './gameData';
 import Results from './Results';
 import snaplockeLogo from './assets/snaplockeLogo.png';
+import games from './assets/games';
 
 function App() {
 
@@ -45,7 +46,8 @@ function App() {
 
 	const handleChange = (e) => {
 		setSubmitted(false);
-		setSelectedVersion(e.target.value)
+		console.log(e.target.getAttribute('value'));
+		setSelectedVersion(e.target.getAttribute('value'))
 		setExpansionsSelected({
 			isleOfArmor: false,
 			crownTundra: false,
@@ -69,17 +71,15 @@ function App() {
 			{/* <h1>Snaplocke Generator</h1> */}
 			<img src={snaplockeLogo} alt="Snaplocke Generator logo" style={{ width: '100%' }} />
 			<div id="form" style={{ width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
-				<InputLabel id="demo-simple-select-label">Version</InputLabel>
-				<Select
-					labelId="version"
-					id="version"
-					value={selectedVersion || ""}
-					label="Age"
-					onChange={handleChange}
-					style={{ width: '25%' }}
-				>
-					{Object.entries(versions).map(([generationName, generationValue]) => generationValue.map(val => (<MenuItem key={val} value={val || ""}>{camelToTitle(val)}</MenuItem>)))}
-				</Select>
+				<div className="versionSelect" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+					{games.map(game => (
+						<div className="versionCard" onClick={handleChange} value={game.value} style={{ display: 'flex', flexDirection: 'column', margin: '2px', justifyContent: 'center', alignItems: 'center', ...selectedVersion === game.value && { filter: "grayscale(0)" } }}>
+							<img className="versionImage" src={game.src} alt={`The cover art for ${game.name}`}  value={game.value} style={{ maxWidth: '96px' }} />
+							<span value={game.value}>{game.name}</span>
+						</div>
+					))}
+				</div>
+
 				{generationsWithExpansions.includes(selectedVersion) && renderExpansionCheckboxes()}
 
 
