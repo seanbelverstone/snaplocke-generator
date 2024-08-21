@@ -5,6 +5,7 @@ import camelToTitle from './utils';
 import versions, { expansions } from './gameData';
 import Results from './Results';
 import snaplockeLogo from './assets/snaplockeLogo.png';
+import games from './assets/games';
 
 function App() {
 
@@ -45,7 +46,7 @@ function App() {
 
 	const handleChange = (e) => {
 		setSubmitted(false);
-		setSelectedVersion(e.target.value)
+		setSelectedVersion(e.target.getAttribute('value'))
 		setExpansionsSelected({
 			isleOfArmor: false,
 			crownTundra: false,
@@ -65,32 +66,33 @@ function App() {
 	}
 
   return (
-    <div className="page">
-			{/* <h1>Snaplocke Generator</h1> */}
+    <div className="page" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 			<img src={snaplockeLogo} alt="Snaplocke Generator logo" style={{ width: '100%' }} />
-			<div id="form" onSubmit={submit}>
-				<form>
-					<InputLabel id="demo-simple-select-label">Version</InputLabel>
-					<Select
-						labelId="version"
-						id="version"
-						value={selectedVersion || ""}
-						label="Age"
-						onChange={handleChange}
-					>
-						{Object.entries(versions).map(([generationName, generationValue]) => generationValue.map(val => (<MenuItem key={val} value={val || ""}>{camelToTitle(val)}</MenuItem>)))}
-					</Select>
-					{generationsWithExpansions.includes(selectedVersion) && renderExpansionCheckboxes()}
+			<div id="form" style={{ width: '80%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+				<div className="versionSelect" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+					{games.map(game => (
+						<div className="versionCard" onClick={handleChange} value={game.value} style={{ display: 'flex', flexDirection: 'column', margin: '2px', justifyContent: 'center', alignItems: 'center', ...selectedVersion === game.value && { filter: "grayscale(0)", border: 'solid 2px gold', boxShadow: '0 0 5px 2.5px #fff, 0 0 10px 5px #f0f, 0 0 15px 7.5px #0ff' } }}>
+							<img className="versionImage" src={game.src} alt={`The cover art for ${game.name}`}  value={game.value} style={{ maxWidth: '96px' }} />
+							<span value={game.value} style={{ ...selectedVersion === game.value && { color: 'gold' } }}>{game.name}</span>
+						</div>
+					))}
+				</div>
+
+				{generationsWithExpansions.includes(selectedVersion) && renderExpansionCheckboxes()}
 
 
-					<div className="misc">
-						<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
-					</div>
-					<Button
-						variant="outlined"
-						disabled={selectedVersion === ""}
-						type="submit">Generate</Button>
-				</form>
+				<div className="misc">
+					<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
+				</div>
+				<Button
+					variant="contained"
+					disabled={selectedVersion === "" || submitted}
+					type="submit"
+					style={{ height: '100px', width: '100px' }}
+					onClick={submit}
+				>
+				Generate
+				</Button>
 			</div>
 			{submitted && (<Results submitted={submitted} version={selectedVersion} noLegendaries={noLegendaries} expansions={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
 		</div>

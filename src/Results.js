@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { legendaries, pokemonPerVersion } from './gameData';
 import { Button } from '@mui/material';
 import snapImage from './assets/snap.png';
-import thanos from './assets/thanos.jpeg';
 import PokemonCard from './PokemonCard';
 import snapSound from './assets/snapSound.mp3';
 
@@ -35,6 +34,17 @@ function Results(props) {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [submitted])
 
+	const scrollToResults = () => {
+		var element = document.querySelector('.results');
+    var headerOffset = 10;
+    var elementPosition = element.getBoundingClientRect().top;
+    var offsetPosition = elementPosition + window.scrollY - headerOffset;
+			window.scrollTo({
+				top: offsetPosition,
+				behavior: 'smooth'
+		})
+	}
+
 	const getSprites = async () => {
 		const pokemonList = noLegendaries ? pokemonPerVersion[version] : [...pokemonPerVersion[version], ...legendaries[version]];
 		setPokemon(pokemonList)
@@ -46,6 +56,11 @@ function Results(props) {
 			const resolvedPromises = await Promise.all(spritePromise);
 			setPokemonDetails(resolvedPromises)
 			setDataComplete(true);
+			setTimeout(() => {
+				scrollToResults();
+			}, 1000)
+
+
 	}
 
 	const snap = () => {
@@ -71,37 +86,30 @@ function Results(props) {
   return (
     <div className="results" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
-				<Button
-					variant="outlined"
-					onClick={snap}
-					style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
-					disabled={snapped}
-					>
-						{snapped ? (
-							<>
-								<img id="img" src={thanos} alt="thanos" style={{ maxWidth: '192px' }} />
-								<span style={{ color: 'red' }}>I AM INEVITABLE</span>
-							</>
-						) : (
-							<>
-								<img src={snapImage} alt="The Infinity Gauntlet in a snapping pose." style={{ maxWidth: '192px' }} />
-								<span>REMOVE HALF</span>
-							</>
-						)}
-
-				</Button>
-				{dataComplete && pokemonDetails?.map(pokemon => (
-					<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
-					))}
-				{snapped && (
+				{!snapped ? (
 					<Button
-					variant="contained"
-					color="success"
-					style={{ width: '100%', margin: '10px 0' }}
+						variant="outlined"
+						onClick={snap}
+						style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+						disabled={snapped}
+					>
+						<img src={snapImage} alt="The Infinity Gauntlet in a snapping pose." style={{ maxWidth: '192px' }} />
+						<span>REMOVE HALF</span>
+					</Button>
+
+				) : (
+					<Button
+						variant="contained"
+						color="success"
+						style={{ width: '100%', margin: '10px 0' }}
 					>
 					Export List
 					</Button>
-				)}
+					)}
+
+				{dataComplete && pokemonDetails?.map(pokemon => (
+					<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
+					))}
 			</div>
 		</div>
 
