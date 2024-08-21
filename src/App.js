@@ -46,7 +46,6 @@ function App() {
 
 	const handleChange = (e) => {
 		setSubmitted(false);
-		console.log(e.target.getAttribute('value'));
 		setSelectedVersion(e.target.getAttribute('value'))
 		setExpansionsSelected({
 			isleOfArmor: false,
@@ -68,14 +67,13 @@ function App() {
 
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-			{/* <h1>Snaplocke Generator</h1> */}
 			<img src={snaplockeLogo} alt="Snaplocke Generator logo" style={{ width: '100%' }} />
-			<div id="form" style={{ width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+			<div id="form" style={{ width: '80%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
 				<div className="versionSelect" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
 					{games.map(game => (
-						<div className="versionCard" onClick={handleChange} value={game.value} style={{ display: 'flex', flexDirection: 'column', margin: '2px', justifyContent: 'center', alignItems: 'center', ...selectedVersion === game.value && { filter: "grayscale(0)" } }}>
+						<div className="versionCard" onClick={handleChange} value={game.value} style={{ display: 'flex', flexDirection: 'column', margin: '2px', justifyContent: 'center', alignItems: 'center', ...selectedVersion === game.value && { filter: "grayscale(0)", border: 'solid 2px gold', boxShadow: '0 0 5px 2.5px #fff, 0 0 10px 5px #f0f, 0 0 15px 7.5px #0ff' } }}>
 							<img className="versionImage" src={game.src} alt={`The cover art for ${game.name}`}  value={game.value} style={{ maxWidth: '96px' }} />
-							<span value={game.value}>{game.name}</span>
+							<span value={game.value} style={{ ...selectedVersion === game.value && { color: 'gold' } }}>{game.name}</span>
 						</div>
 					))}
 				</div>

@@ -34,6 +34,17 @@ function Results(props) {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [submitted])
 
+	const scrollToResults = () => {
+		var element = document.querySelector('.results');
+    var headerOffset = 10;
+    var elementPosition = element.getBoundingClientRect().top;
+    var offsetPosition = elementPosition + window.scrollY - headerOffset;
+			window.scrollTo({
+				top: offsetPosition,
+				behavior: 'smooth'
+		})
+	}
+
 	const getSprites = async () => {
 		const pokemonList = noLegendaries ? pokemonPerVersion[version] : [...pokemonPerVersion[version], ...legendaries[version]];
 		setPokemon(pokemonList)
@@ -45,6 +56,11 @@ function Results(props) {
 			const resolvedPromises = await Promise.all(spritePromise);
 			setPokemonDetails(resolvedPromises)
 			setDataComplete(true);
+			setTimeout(() => {
+				scrollToResults();
+			}, 1000)
+
+
 	}
 
 	const snap = () => {
