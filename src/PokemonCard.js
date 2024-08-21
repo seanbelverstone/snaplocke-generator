@@ -1,12 +1,17 @@
 import React from 'react';
 import toTitleCase from './utils';
 import types from './assets/types/index.js';
+import { gamesWithoutFairy } from './gameData.js';
 
 
 function PokemonCard(props) {
-	const { pokemon, detailLevel, animation } = props;
+	const { pokemon, detailLevel, version, animation } = props;
 	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice']
-
+	// if gamesWithoutFairy.includes(version)
+	// if the version is included in the games where fairy did not exist, and it's a dual type, set the second type to nothing
+	// else if, the version is included in the games where fairy did not exist, and it's the only type, set it to normal
+	// then if only type is fairy, set it to normal
+	// otherwise remove
   return (
 		<>
 		{detailLevel === 'basic' ? (

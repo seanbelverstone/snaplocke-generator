@@ -95,6 +95,7 @@ function App() {
 				</Button>
 			</div>
 			{submitted && (<Results submitted={submitted} version={selectedVersion} noLegendaries={noLegendaries} expansions={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
+			<span>All images and information are obtained through <a href="https://pokeapi.co/docs/v2#info" target="blank" rel="noreferrer">PokeApi</a> and <a href="https://bulbapedia.bulbagarden.net/wiki/Main_Page" target="blank" rel="noreferrer">Bulbapedia</a>. All rights reserved.</span>
 		</div>
 
   );

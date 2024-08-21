@@ -126,7 +126,7 @@ function Results(props) {
 				)}
 				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
 					{dataComplete && pokemonDetails?.map(pokemon => (
-						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
+						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
 						))}
 				</div>
 		</div>
