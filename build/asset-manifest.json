@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/snaplocke-generator/static/css/main.ab7c15a1.css",
-    "main.js": "/snaplocke-generator/static/js/main.f8e07f39.js",
+    "main.js": "/snaplocke-generator/static/js/main.fc09a1fe.js",
     "static/js/453.c24acea7.chunk.js": "/snaplocke-generator/static/js/453.c24acea7.chunk.js",
     "static/media/snap.png": "/snaplocke-generator/static/media/snap.6bce4ff947a9d2252683.png",
     "static/media/snaplockeLogo.png": "/snaplocke-generator/static/media/snaplockeLogo.c8263e64b002899f14c8.png",
@@ -43,11 +43,11 @@
     "static/media/diamond.jpg": "/snaplocke-generator/static/media/diamond.1034b901b3ba90d4513e.jpg",
     "index.html": "/snaplocke-generator/index.html",
     "main.ab7c15a1.css.map": "/snaplocke-generator/static/css/main.ab7c15a1.css.map",
-    "main.f8e07f39.js.map": "/snaplocke-generator/static/js/main.f8e07f39.js.map",
+    "main.fc09a1fe.js.map": "/snaplocke-generator/static/js/main.fc09a1fe.js.map",
     "453.c24acea7.chunk.js.map": "/snaplocke-generator/static/js/453.c24acea7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ab7c15a1.css",
-    "static/js/main.f8e07f39.js"
+    "static/js/main.fc09a1fe.js"
   ]
 }
