@@ -1,13 +1,14 @@
 {
   "files": {
     "main.css": "/snaplocke-generator/static/css/main.ab7c15a1.css",
-    "main.js": "/snaplocke-generator/static/js/main.fc09a1fe.js",
+    "main.js": "/snaplocke-generator/static/js/main.b3530250.js",
     "static/js/453.c24acea7.chunk.js": "/snaplocke-generator/static/js/453.c24acea7.chunk.js",
     "static/media/snap.png": "/snaplocke-generator/static/media/snap.6bce4ff947a9d2252683.png",
     "static/media/snaplockeLogo.png": "/snaplocke-generator/static/media/snaplockeLogo.c8263e64b002899f14c8.png",
     "static/media/violet.png": "/snaplocke-generator/static/media/violet.cee63ec63a50be36c5ac.png",
     "static/media/scarlet.png": "/snaplocke-generator/static/media/scarlet.dab501206bedaeec3ddd.png",
     "static/media/brilliantDiamond.png": "/snaplocke-generator/static/media/brilliantDiamond.dda13d9253778ef64f55.png",
+    "static/media/leafGreen.png": "/snaplocke-generator/static/media/leafGreen.2446c86071ae6763628b.png",
     "static/media/blue.png": "/snaplocke-generator/static/media/blue.d5629cd47238fafc51d1.png",
     "static/media/legendsArceus.png": "/snaplocke-generator/static/media/legendsArceus.9465b0ea432321c865e2.png",
     "static/media/shiningPearl.png": "/snaplocke-generator/static/media/shiningPearl.38231e146afc6c9326cc.png",
@@ -17,6 +18,7 @@
     "static/media/letsGoEevee.png": "/snaplocke-generator/static/media/letsGoEevee.22fece77ae4512df9cbc.png",
     "static/media/sapphire.png": "/snaplocke-generator/static/media/sapphire.c4fba55d84daebe3c24b.png",
     "static/media/crystal.png": "/snaplocke-generator/static/media/crystal.e7ef80af957fba343413.png",
+    "static/media/fireRed.png": "/snaplocke-generator/static/media/fireRed.bbda7d8b911aec28f633.png",
     "static/media/letsGoPikachu.png": "/snaplocke-generator/static/media/letsGoPikachu.b6ca49c39851f4297f4e.png",
     "static/media/yellow.png": "/snaplocke-generator/static/media/yellow.1f5418a572f442d067fd.png",
     "static/media/silver.png": "/snaplocke-generator/static/media/silver.3668926a74d905d70b48.png",
@@ -43,11 +45,11 @@
     "static/media/diamond.jpg": "/snaplocke-generator/static/media/diamond.1034b901b3ba90d4513e.jpg",
     "index.html": "/snaplocke-generator/index.html",
     "main.ab7c15a1.css.map": "/snaplocke-generator/static/css/main.ab7c15a1.css.map",
-    "main.fc09a1fe.js.map": "/snaplocke-generator/static/js/main.fc09a1fe.js.map",
+    "main.b3530250.js.map": "/snaplocke-generator/static/js/main.b3530250.js.map",
     "453.c24acea7.chunk.js.map": "/snaplocke-generator/static/js/453.c24acea7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ab7c15a1.css",
-    "static/js/main.fc09a1fe.js"
+    "static/js/main.b3530250.js"
   ]
 }
