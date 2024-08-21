@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { legendaries, pokemonPerVersion } from './gameData';
-import { Button } from '@mui/material';
+import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import snapImage from './assets/snap.png';
 import PokemonCard from './PokemonCard';
 import snapSound from './assets/snapSound.mp3';
@@ -22,7 +22,8 @@ function Results(props) {
 	const [deletedPokemon, setDeletedPokemon] = useState([]);
 	const [animation, setAnimation] = useState('none');
 	const [snapped, setSnapped] = useState(false);
-	/* 
+	const [detailLevel, setDetailLevel] = useState('basic');
+	/*
 		click a button to snap	
 		animation of snap - fade out half
 	*/
@@ -83,6 +84,10 @@ function Results(props) {
 
 	};
 
+	const handleDetailLevel = (event, value) => {
+		setDetailLevel(value);
+	}
+
   return (
     <div className="results" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 				{!snapped ? (
@@ -97,17 +102,31 @@ function Results(props) {
 					</Button>
 
 				) : (
-					<Button
-						variant="contained"
-						color="success"
-						style={{ width: '100%', margin: '10px 0' }}
-					>
-					Export List
-					</Button>
+					<ToggleButtonGroup
+					color="primary"
+					value={detailLevel}
+					exclusive
+					onChange={handleDetailLevel}
+					aria-label="detail level"
+				>
+					<ToggleButton value="basic" aria-label="basic">
+						Basic
+					</ToggleButton>
+					<ToggleButton value="detailed" aria-label="detailed">
+						Detailed
+					</ToggleButton>
+				</ToggleButtonGroup>
+					// <Button
+					// 	variant="contained"
+					// 	color="success"
+					// 	style={{ width: '100%', margin: '10px 0' }}
+					// >
+					// Export List
+					// </Button>
 				)}
 				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
 					{dataComplete && pokemonDetails?.map(pokemon => (
-						<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
+						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
 						))}
 				</div>
 		</div>
