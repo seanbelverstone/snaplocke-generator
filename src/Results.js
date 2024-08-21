@@ -84,13 +84,12 @@ function Results(props) {
 	};
 
   return (
-    <div className="results" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="results" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 				{!snapped ? (
 					<Button
 						variant="outlined"
 						onClick={snap}
-						style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+						style={{ width: 'min-content', display: 'flex', flexDirection: 'column' }}
 						disabled={snapped}
 					>
 						<img src={snapImage} alt="The Infinity Gauntlet in a snapping pose." style={{ maxWidth: '192px' }} />
@@ -105,12 +104,12 @@ function Results(props) {
 					>
 					Export List
 					</Button>
-					)}
-
-				{dataComplete && pokemonDetails?.map(pokemon => (
-					<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
-					))}
-			</div>
+				)}
+				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+					{dataComplete && pokemonDetails?.map(pokemon => (
+						<PokemonCard key={pokemon.name} pokemon={pokemon} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
+						))}
+				</div>
 		</div>
 
   );
