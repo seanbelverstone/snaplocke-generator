@@ -65,10 +65,10 @@ function App() {
 	}
 
   return (
-    <div className="page">
+    <div className="page" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 			{/* <h1>Snaplocke Generator</h1> */}
 			<img src={snaplockeLogo} alt="Snaplocke Generator logo" style={{ width: '100%' }} />
-			<div id="form" style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px' }}>
+			<div id="form" style={{ width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
 				<InputLabel id="demo-simple-select-label">Version</InputLabel>
 				<Select
 					labelId="version"

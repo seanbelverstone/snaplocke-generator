@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { legendaries, pokemonPerVersion } from './gameData';
 import { Button } from '@mui/material';
 import snapImage from './assets/snap.png';
-import thanos from './assets/thanos.jpeg';
 import PokemonCard from './PokemonCard';
 import snapSound from './assets/snapSound.mp3';
 

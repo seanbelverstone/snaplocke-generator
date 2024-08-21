@@ -1,15 +1,3 @@
-#form {
-	display: flex;
-	flex-direction: column;
-}
-
-.genGroup {
-	display: flex;
-	flex-direction: column;
-	margin-bottom: 2em;
-	/* align-items: center; */
-}
-
 .error {
 	color: red;
 	text-decoration: underline;
