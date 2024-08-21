@@ -74,7 +74,7 @@ export const legendaries = {
 	},
 	brilliantDiamond: ["mewtwo", "mew", "raikou", "entei", "suicune", "ho-oh", "regirock", "regice", "registeel", "latias", "latios", "groudon", "kyogre", "rayquaza", "jirachi", "mesprit", "uxie", "azelf", "dialga", "heatran", "regigigas", "giratina-altered", "cresselia", "arceus"],
 	shiningPearl: ["articuno", "zapdos", "moltres", "mewtwo", "mew", "raikou", "entei", "suicune", "lugia", "regirock", "regice", "registeel", "latias", "latios", "groudon", "kyogre", "rayquaza", "jirachi", "mesprit", "uxie", "azelf", "palkia", "heatran", "regigigas", "giratina-altered", "cresselia", "arceus"],
-	legendsArceus: ["mesprit", "uxie", "azelf", "dialga", "heatran", "regigigas", "giratina-altered", "cresselia", "manaphy", "darkrai", "shaymin-land", "arceus", "tornadus-incarnate", "thundurus-incarnate", "landorus-incarnate", "enamorus-incarnate"],
+	legendsArceus: ["mesprit", "uxie", "azelf", "dialga", "palkia", "heatran", "regigigas", "giratina-altered", "cresselia", "manaphy", "darkrai", "shaymin-land", "arceus", "tornadus-incarnate", "thundurus-incarnate", "landorus-incarnate", "enamorus-incarnate"],
 	scarlet: ["koraidon", "wo-chien", "chien-pao", "ting-lu", "chi-yu", "walking-wake"],
 	violet: ["miraidon", "wo-chien", "chien-pao", "ting-lu", "chi-yu", "iron-leaves"],
 	theTealMask: ["okidogi", "munkidori", "fezandipiti", "ogrepon"],

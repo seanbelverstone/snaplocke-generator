@@ -19,7 +19,9 @@ function App() {
 	const [submitted, setSubmitted] = useState(false);
 	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	
+	// add explanation to what a snaplocke is
 	// Maybe have an option to either choose a starter/a starter is chosen randomly/two or all starters can be snapped
+	// fix border addition moving other games, maybe add padding/margin
 
 	const renderExpansionCheckboxes = () => {
 		if (selectedVersion === 'sword' || selectedVersion === 'shield') {
