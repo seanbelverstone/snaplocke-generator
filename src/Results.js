@@ -15,7 +15,10 @@ import snapSound from './assets/snapSound.mp3';
 */
 
 function Results(props) {
-	const { submitted, version, noLegendaries, expansions } = props;
+	const { submitted, version, noLegendaries
+		// , expansions 
+		} = props;
+	// eslint-disable-next-line no-unused-vars
 	const [pokemon, setPokemon] = useState([]);
 	const [pokemonDetails, setPokemonDetails] = useState([]);
 	const [dataComplete, setDataComplete] = useState(false);
@@ -23,10 +26,6 @@ function Results(props) {
 	const [animation, setAnimation] = useState('none');
 	const [snapped, setSnapped] = useState(false);
 	const [detailLevel, setDetailLevel] = useState('basic');
-	/*
-		click a button to snap	
-		animation of snap - fade out half
-	*/
 
 	useEffect(() => {
 		setDataComplete(false);
@@ -90,7 +89,7 @@ function Results(props) {
 
   return (
     <div className="results" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-				{!snapped ? (
+				{!snapped && (
 					<Button
 						variant="outlined"
 						onClick={snap}
@@ -101,8 +100,8 @@ function Results(props) {
 						<span>REMOVE HALF</span>
 					</Button>
 
-				) : (
-					<ToggleButtonGroup
+				)}
+				<ToggleButtonGroup
 					color="primary"
 					value={detailLevel}
 					exclusive
@@ -116,14 +115,13 @@ function Results(props) {
 						Detailed
 					</ToggleButton>
 				</ToggleButtonGroup>
-					// <Button
-					// 	variant="contained"
-					// 	color="success"
-					// 	style={{ width: '100%', margin: '10px 0' }}
-					// >
-					// Export List
-					// </Button>
-				)}
+					{/*<Button
+					variant="contained"
+					color="success"
+					style={{ width: '100%', margin: '10px 0' }}
+					/>
+					Export List
+					</Button>*/}
 				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
 					{dataComplete && pokemonDetails?.map(pokemon => (
 						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} noFairyInGame={gamesWithoutFairy.includes(version)}/>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, FormControlLabel, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
 import './App.css';
 import toTitleCase from './utils';
 import versions, { expansions } from './gameData';

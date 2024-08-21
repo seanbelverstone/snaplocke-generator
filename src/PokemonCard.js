@@ -1,7 +1,6 @@
 import React from 'react';
 import toTitleCase from './utils';
 import types from './assets/types/index.js';
-import { gamesWithoutFairy } from './gameData.js';
 
 
 function PokemonCard(props) {
