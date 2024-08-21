@@ -7,6 +7,8 @@ import crystal from './crystal.png';
 import ruby from './ruby.png';
 import sapphire from './sapphire.png';
 import emerald from './emerald.jpg';
+import fireRed from './fireRed.png';
+import leafGreen from './leafGreen.png';
 import diamond from './diamond.jpg';
 import pearl from './pearl.jpg';
 import platinum from './platinum.png';
@@ -44,6 +46,8 @@ const games = [
 	{ name: 'Ruby', src: ruby, value: 'ruby'},
 	{ name: 'Sapphire', src: sapphire, value: 'sapphire'},
 	{ name: 'Emerald', src: emerald, value: 'emerald'},
+	{ name: 'Fire Red', src: fireRed, value: 'fireRed'},
+	{ name: 'Leaf Green', src: leafGreen, value: 'leafGreen'},
 	{ name: 'Diamond', src: diamond, value: 'diamond'},
 	{ name: 'Pearl', src: pearl, value: 'pearl'},
 	{ name: 'Platinum', src: platinum, value: 'platinum'},

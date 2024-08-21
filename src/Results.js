@@ -14,6 +14,8 @@ import snapSound from './assets/snapSound.mp3';
 		abilities
 */
 
+// append expansionData results
+
 function Results(props) {
 	const { submitted, version, noLegendaries
 		// , expansions 
@@ -47,6 +49,7 @@ function Results(props) {
 
 	const getSprites = async () => {
 		const pokemonList = noLegendaries ? pokemonPerVersion[version] : [...pokemonPerVersion[version], ...legendaries[version]];
+		// expansions ? + expansion to list
 		setPokemon(pokemonList)
 		const spritePromise = pokemonList.map(async name => {
 			return await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)

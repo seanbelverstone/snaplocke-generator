@@ -1,3 +1,5 @@
+import { dark } from "@mui/material/styles/createPalette";
+
 const versions = {
 	kanto: ["red", "blue", "yellow", "fireRed", "leafGreen"],
 	originalJohto: ["gold", "silver", "crystal"],
@@ -67,8 +69,8 @@ export const legendaries = {
 	shield: ["type-null", "zamazenta", "eternatus"],
 	isleOfArmor: ["kubfu"],
 	crownOfTundra: {
-		sword: ["articuno-g", "zapdos-g", "moltres-g", "mewtwo", "raikou", "entei", "suicune", "ho-oh", "regirock", "regice", "registeel", "latios", "groudon", "rayquaza", "mesprit", "uxie", "azelf", "dialga", "heatran", "giratina-altered", "regigigas", "giratina-altered", "cresselia", "cobalion", "terrakion", "virizion", "tornadus-incarnate", "landorus-incarnate", "reshiram", "kyurem", "keldeo", "xerneas", "zygarde-50", "solgaleo", "tapu-koko", "tapu-lele", "tapu-bulu", "tapu-fini", "cosmog", "regieleki", "regidrago", "glastrier", "spectrier", "calyrex"],
-		shield: ["articuno-g", "zapdos-g", "moltres-g", "mewtwo", "raikou", "entei", "suicune", "lugia", "regirock", "regice", "registeel", "latias", "kyogre", "rayquaza", "mesprit", "uxie", "azelf", "palkia", "heatran", "giratina-altered", "regigigas", "giratina-altered", "cresselia", "cobalion", "terrakion", "virizion", "thundurus-incarnate", "landorus-incarnate", "zekrom", "kyurem", "keldeo", "yveltal", "zygarde-50", "lunala", "tapu-koko", "tapu-lele", "tapu-bulu", "tapu-fini", "cosmog", "regieleki", "regidrago", "glastrier", "spectrier", "calyrex"]
+		sword: ["articuno", "zapdos", "moltres", "mewtwo", "raikou", "entei", "suicune", "ho-oh", "regirock", "regice", "registeel", "latios", "groudon", "rayquaza", "mesprit", "uxie", "azelf", "dialga", "heatran", "giratina-altered", "regigigas", "giratina-altered", "cresselia", "cobalion", "terrakion", "virizion", "tornadus-incarnate", "landorus-incarnate", "reshiram", "kyurem", "keldeo", "xerneas", "zygarde-50", "solgaleo", "tapu-koko", "tapu-lele", "tapu-bulu", "tapu-fini", "cosmog", "regieleki", "regidrago", "glastrier", "spectrier", "calyrex"],
+		shield: ["articuno", "zapdos", "moltres", "mewtwo", "raikou", "entei", "suicune", "lugia", "regirock", "regice", "registeel", "latias", "kyogre", "rayquaza", "mesprit", "uxie", "azelf", "palkia", "heatran", "giratina-altered", "regigigas", "giratina-altered", "cresselia", "cobalion", "terrakion", "virizion", "thundurus-incarnate", "landorus-incarnate", "zekrom", "kyurem", "keldeo", "yveltal", "zygarde-50", "lunala", "tapu-koko", "tapu-lele", "tapu-bulu", "tapu-fini", "cosmog", "regieleki", "regidrago", "glastrier", "spectrier", "calyrex"]
 	},
 	brilliantDiamond: ["mewtwo", "mew", "raikou", "entei", "suicune", "ho-oh", "regirock", "regice", "registeel", "latias", "latios", "groudon", "kyogre", "rayquaza", "jirachi", "mesprit", "uxie", "azelf", "dialga", "heatran", "regigigas", "giratina-altered", "cresselia", "arceus"],
 	shiningPearl: ["articuno", "zapdos", "moltres", "mewtwo", "mew", "raikou", "entei", "suicune", "lugia", "regirock", "regice", "registeel", "latias", "latios", "groudon", "kyogre", "rayquaza", "jirachi", "mesprit", "uxie", "azelf", "palkia", "heatran", "regigigas", "giratina-altered", "cresselia", "arceus"],
