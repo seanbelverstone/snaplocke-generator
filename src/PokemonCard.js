@@ -57,7 +57,7 @@ function PokemonCard(props) {
 						<td>Base Stats</td>
 					</tr>
 					{pokemon.data.stats.map(stat => (
-						<tr>
+						<tr key={stat.stat.name}>
 							<td>{`${toTitleCase(stat.stat.name)}: ${stat.base_stat}`}</td>
 						</tr>
 					))}

@@ -8,7 +8,6 @@ import snaplockeLogo from './assets/snaplockeLogo.png';
 import games from './assets/games';
 
 function App() {
-
 	const [selectedVersion, setSelectedVersion] = useState("");
 	const [expansionsSelected, setExpansionsSelected] = useState({
 		isleOfArmor: false,
@@ -20,6 +19,8 @@ function App() {
 	const [submitted, setSubmitted] = useState(false);
 	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	
+	// Maybe have an option to either choose a starter/a starter is chosen randomly/two or all starters can be snapped
+
 	const renderExpansionCheckboxes = () => {
 		if (selectedVersion === 'sword' || selectedVersion === 'shield') {
 			return (
