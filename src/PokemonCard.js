@@ -5,13 +5,36 @@ import { gamesWithoutFairy } from './gameData.js';
 
 
 function PokemonCard(props) {
-	const { pokemon, detailLevel, version, animation } = props;
-	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice']
-	// if gamesWithoutFairy.includes(version)
-	// if the version is included in the games where fairy did not exist, and it's a dual type, set the second type to nothing
-	// else if, the version is included in the games where fairy did not exist, and it's the only type, set it to normal
-	// then if only type is fairy, set it to normal
-	// otherwise remove
+	const { pokemon, detailLevel, animation, noFairyInGame } = props;
+	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice'];
+
+	const renderTypes = () => {
+		if (pokemon.data.types.length > 1) {
+			if (noFairyInGame) {
+				return (
+					<>
+						<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[0].type.name === 'fairy' ? 'normal' : pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
+						{(pokemon.data.types[1].type.name !== 'fairy') ? (<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[1].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[1].type.name}`} />) : (<div style={{ height: '15px' }}></div>)}
+					</>
+				)
+			} else {
+				return (
+					<>
+					<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
+					<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[1].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[1].type.name}`} />
+				</>
+				)
+			}
+		} else {
+			return (
+			<>
+				<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[0].type.name === 'fairy' && noFairyInGame ? 'normal' : pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
+				<div style={{ height: '15px' }}></div>
+			</>
+			)
+		}
+	}
+
   return (
 		<>
 		{detailLevel === 'basic' ? (
@@ -28,10 +51,7 @@ function PokemonCard(props) {
 					<tbody>
 					<tr>
 							<td style={{ display: 'flex', flexDirection: 'column' }}>
-								<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
-								{pokemon.data.types.length > 1 ? (
-									<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[1].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[1].type.name}`} />
-								) : <div style={{ height: '15px' }}></div>}
+								{renderTypes()}
 							</td>
 					</tr>
 					<tr>

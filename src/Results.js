@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { legendaries, pokemonPerVersion } from './gameData';
+import { gamesWithoutFairy, legendaries, pokemonPerVersion } from './gameData';
 import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import snapImage from './assets/snap.png';
 import PokemonCard from './PokemonCard';
@@ -126,7 +126,7 @@ function Results(props) {
 				)}
 				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
 					{dataComplete && pokemonDetails?.map(pokemon => (
-						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} />
+						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} noFairyInGame={gamesWithoutFairy.includes(version)}/>
 						))}
 				</div>
 		</div>
