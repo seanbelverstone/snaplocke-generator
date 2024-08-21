@@ -22,6 +22,16 @@ export const expansions = {
 	genNine: [{ name: "tealMask", route: "kitakami" }, { name: "indigoDisk", route: "blueberry" }]
 }
 
+export const gamesWithoutFairy = [
+	...versions.kanto,
+	...versions.originalJohto,
+	...versions.hoenn,
+	...versions.originalSinnoh,
+	...versions.updatedJohto,
+	...versions.originalUnova,
+	...versions.updatedUnova
+];
+
 export const legendaries = {
 	red: ["articuno", "zapdos", "moltres", "mewtwo"],
 	blue: ["articuno", "zapdos", "moltres", "mewtwo"],
