@@ -95,18 +95,20 @@ function App() {
 			>
 				<Box id="modalBox" sx={{ boxShadow: 24, p: 4 }}>
 					<Button className="modalCloseButton" onClick={handleClose} variant="contained">Close</Button>
-					<h3>What is a Snaplocke?</h3>
-					<p>A snaplocke is a variation on a <a href="https://bulbapedia.bulbagarden.net/wiki/Nuzlocke_Challenge" target="_blank" rel="noreferrer">nuzlocke</a> in which half of a game's possible encounters are "snapped" as if Thanos had wiped them out of existence.</p>
-					<img id="thanos" src={thanos} alt="Marvel Studio's Thanos snapping his fingers"/>
-					<p> In reality, it means that the only pokemon left are considered eligible encounters. As far as I am aware, the nuzlocke variant appeared first in <a href="https://youtu.be/KU5WsWyqeDE?si=XjKOKbhxQ5uyQegl" target="_blank" rel="noreferrer">Flygon HG's excellent video</a>, where his chat voted on which Pokemon to remove. Without having a Twitch chat or large community to vote on the encounters, the next best option for someone else to try the format is to randomly remove them.</p>
-					<h3>How to use the generator?</h3>
-					<ul>
-						<li>Choose a game from the list.</li>
-						<li>Select some modifiers if you like, such as banning legendaries or the option to choose a starter.</li>
-						<li>Click generate. This will list out all Pokemon available for that version.</li>
-						<li>Snap Thanos' fingers! This will remove half of the available encounters from the list.</li>
-					</ul>
-					<p>And enjoy! I would recommend taking a screenshot of the page to keep your results safe for future reference.</p>
+					<div id="modalContent">
+						<h3>What is a Snaplocke?</h3>
+						<p>A snaplocke is a variation on a <a href="https://bulbapedia.bulbagarden.net/wiki/Nuzlocke_Challenge" target="_blank" rel="noreferrer">nuzlocke</a> in which half of a game's possible encounters are "snapped" as if Thanos had wiped them out of existence.</p>
+						<img id="thanos" src={thanos} alt="Marvel Studio's Thanos snapping his fingers"/>
+						<p> In reality, it means that the only pokemon left are considered eligible encounters. As far as I am aware, the nuzlocke variant appeared first in <a href="https://youtu.be/KU5WsWyqeDE?si=XjKOKbhxQ5uyQegl" target="_blank" rel="noreferrer">Flygon HG's excellent video</a>, where his chat voted on which Pokemon to remove. Without having a Twitch chat or large community to vote on the encounters, the next best option for someone else to try the format is to randomly remove them.</p>
+						<h3>How to use the generator?</h3>
+						<ul>
+							<li>Choose a game from the list.</li>
+							<li>Select some modifiers if you like, such as banning legendaries or the option to choose a starter.</li>
+							<li>Click generate. This will list out all Pokemon available for that version.</li>
+							<li>Snap Thanos' fingers! This will remove half of the available encounters from the list.</li>
+						</ul>
+						<p>And enjoy! I would recommend using the <b>Download results screenshot</b> button that appears post-snap, to keep your results safe for future reference.</p>
+					</div>
 				</Box>
 			</Modal>
 
@@ -116,7 +118,7 @@ function App() {
 					{games.map(game => (
 						<div className="versionCard" key={game.value} onClick={handleChange} value={game.value} style={{ ...selectedVersion === game.value && { filter: "grayscale(0)", border: 'solid 2px gold', boxShadow: '0 0 5px 2.5px #fff, 0 0 10px 5px #f0f, 0 0 15px 7.5px #0ff' } }}>
 							<img className="versionImage" src={game.src} alt={`The cover art for ${game.name}`}  value={game.value} />
-							<span value={game.value} style={{ ...selectedVersion === game.value && { color: 'gold' } }}>{game.name}</span>
+							<span className="versionName" value={game.value} style={{ ...selectedVersion === game.value && { color: 'gold' } }}>{game.name}</span>
 						</div>
 					))}
 				</div>
@@ -174,7 +176,7 @@ function App() {
 				)}
 			</div>
 			{submitted && (<Results submitted={submitted} version={selectedVersion} versionRegion={versionRegion} noLegendaries={noLegendaries} selectedStarter={selectedStarter} expansionsSelected={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
-			<span>All images and information are obtained through <a href="https://pokeapi.co/docs/v2#info" target="blank" rel="noreferrer">PokeApi</a> and <a href="https://bulbapedia.bulbagarden.net/wiki/Main_Page" target="blank" rel="noreferrer">Bulbapedia</a>. All rights reserved.</span>
+			<span id="sourceDisclaimer">All images and information are obtained through <a href="https://pokeapi.co/docs/v2#info" target="blank" rel="noreferrer">PokeApi</a> and <a href="https://bulbapedia.bulbagarden.net/wiki/Main_Page" target="blank" rel="noreferrer">Bulbapedia</a>. All rights reserved.</span>
 		</div>
 
   );
