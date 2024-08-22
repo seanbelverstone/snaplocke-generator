@@ -44,7 +44,7 @@
 .versionSelect {
 	flex-direction: row;
 	flex-wrap: wrap;
-	background-image: linear-gradient(whitesmoke, lightblue);
+	background-image: linear-gradient(#f5f5f5, #add8e6);
 	border-radius: 20px;
 	padding: 20px;
 	box-shadow: 0 0 5px 2.5px black;

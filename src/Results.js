@@ -5,6 +5,7 @@ import snapImage from './assets/snap.png';
 import PokemonCard from './PokemonCard';
 import snapSound from './assets/snapSound.mp3';
 import './styles/Results.css';
+import ScreenshotButton from './ScreenshotButton';
 
 /* this page will list out the pokemon in different layouts:
  - basic
@@ -110,7 +111,9 @@ function Results(props) {
 
   return (
     <div className="results">
-				{!snapped && (
+				{snapped ? (
+					<ScreenshotButton version={version}/>
+				) : (
 					<Button
 						variant="contained"
 						onClick={snap}
@@ -122,6 +125,7 @@ function Results(props) {
 					</Button>
 
 				)}
+				
 				<ToggleButtonGroup
 					color="primary"
 					value={detailLevel}
@@ -137,13 +141,7 @@ function Results(props) {
 						Detailed
 					</ToggleButton>
 				</ToggleButtonGroup>
-					{/*<Button
-					variant="contained"
-					color="success"
-					style={{ width: '100%', margin: '10px 0' }}
-					/>
-					Export List
-					</Button>*/}
+				<div id="output"></div>
 				<div id="cardArea">
 					{dataComplete && pokemonDetails?.map(pokemon => (
 						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} noFairyInGame={gamesWithoutFairy.includes(version)}/>
