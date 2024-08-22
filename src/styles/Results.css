@@ -35,8 +35,48 @@
 
 #cardArea {
 	 width: 80%;
+	 max-width: 2000px;
 	 flex-wrap: wrap;
 	 flex-direction: row;
 	 z-index: 1;
 	 margin-bottom: 40px;
+}
+
+@media (max-width: 1870px) {
+
+}
+
+@media (max-width: 1220px) {
+	#gauntlet {
+		max-width: 145px;
+	}
+}
+
+@media (max-width: 900px) {
+	#gauntlet {
+		max-width: 145px;
+	}
+	#cardArea {
+		width: 90%;
+	}
+}
+
+@media (max-width: 700px) {
+	#gauntlet {
+		max-width: 100px;
+	}
+	#cardArea {
+		width: 95%;
+	}
+}
+
+@media (max-width: 480px) {}
+
+@media (max-width: 420px) {
+	#gauntlet {
+		max-width: 80px;
+	}
+	#snapButtonText {
+		margin-bottom: 2px;
+	}
 }
