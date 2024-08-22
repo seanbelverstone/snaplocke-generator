@@ -40,14 +40,14 @@ function PokemonCard(props) {
 		{/* Basic view */}
 		{detailLevel === 'basic' ? (
 			<div className="cardBasic" id={pokemon.name} style={{ animation: animation }}> {/* might change the color here */}
-				<img className="cardImage" src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
+				<img className="cardImage" crossOrigin="anonymous" src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
 				<p>{toTitleCase(irregularNames.includes(pokemon.name) ? pokemon.name.split('-')[0] : pokemon.name)}</p>
 			</div>
 		) : (
 			// Detailed view
 			<div className="cardDetailed" id={pokemon.name} style={{ animation: animation }}> {/* might change the color here */}
 			<div className="imageAndType">
-				<img className="cardImage" src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
+				<img className="cardImage" crossOrigin="anonymous" src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
 				<div className="typesSection">
 					{renderTypes()}
 				</div>
