@@ -61,10 +61,13 @@ function App() {
 	}
 
 	const handleStarterOptions = (e) => {
+		setSubmitted(false);
+		setSelectedStarter('');
 		setStarterOption(e.target.value);
 	}
 
 	const handleStarterSelect = (e) => {
+		setSubmitted(false);
 		setSelectedStarter(e.target.value);
 	}
 
@@ -173,7 +176,7 @@ function App() {
 				</div>
 				<Button
 					variant="contained"
-					disabled={selectedVersion === "" || submitted}
+					disabled={selectedVersion === "" || starterOption === "" || (starterOption === "chooseOne" && selectedStarter === "") || submitted}
 					type="submit"
 					style={{ height: '100px', width: '100px' }}
 					onClick={submit}
