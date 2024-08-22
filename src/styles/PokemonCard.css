@@ -17,10 +17,21 @@
 
 .cardDetailed {
 	flex-direction: row;
+	padding: 10px;
+	width: 300px;
 }
 
 .cardImage {
 	 max-width: 96px;
 	 max-height: 96px;
 	 image-rendering: pixelated
+}
+
+.typeImage {
+	max-width: 70px;
+}
+
+.statValue {
+	font-weight: bold;
+	margin-left: 5px;
 }

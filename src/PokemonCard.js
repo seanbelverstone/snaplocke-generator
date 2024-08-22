@@ -13,22 +13,22 @@ function PokemonCard(props) {
 			if (noFairyInGame) {
 				return (
 					<>
-						<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[0].type.name === 'fairy' ? 'normal' : pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
-						{(pokemon.data.types[1].type.name !== 'fairy') ? (<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[1].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[1].type.name}`} />) : (<div style={{ height: '15px' }}></div>)}
+						<img className="typeImage" src={types[pokemon.data.types[0].type.name === 'fairy' ? 'normal' : pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
+						{(pokemon.data.types[1].type.name !== 'fairy') ? (<img className="typeImage" src={types[pokemon.data.types[1].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[1].type.name}`} />) : (<div style={{ height: '15px' }}></div>)}
 					</>
 				)
 			} else {
 				return (
 					<>
-					<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
-					<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[1].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[1].type.name}`} />
+					<img className="typeImage" src={types[pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
+					<img className="typeImage" src={types[pokemon.data.types[1].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[1].type.name}`} />
 				</>
 				)
 			}
 		} else {
 			return (
 			<>
-				<img style={{ maxWidth: '70px'}} src={types[pokemon.data.types[0].type.name === 'fairy' && noFairyInGame ? 'normal' : pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
+				<img className="typeImage" src={types[pokemon.data.types[0].type.name === 'fairy' && noFairyInGame ? 'normal' : pokemon.data.types[0].type.name]} alt={`A representation of the pokemon type ${pokemon.data.types[0].type.name}`} />
 				<div style={{ height: '15px' }}></div>
 			</>
 			)
@@ -52,16 +52,14 @@ function PokemonCard(props) {
 					{renderTypes()}
 				</div>
 			</div>
-			<section>
+			<section className="detailsArea">
 				<span className="noto-sans-bold">{toTitleCase(irregularNames.includes(pokemon.name) ? pokemon.name.split('-')[0] : pokemon.name)}</span>
 				<table>
 					<tbody>
-						<tr>
-							<td>Base Stats</td>
-						</tr>
 						{pokemon.data.stats.map(stat => (
 							<tr key={stat.stat.name}>
-								<td>{`${toTitleCase(stat.stat.name)}: ${stat.base_stat}`}</td>
+								<td className="statName">{`${toTitleCase(stat.stat.name === 'hp' ? stat.stat.name.toUpperCase() : stat.stat.name)}: `}</td>
+								<td className="statValue">{stat.base_stat}</td>
 							</tr>
 						))}
 					</tbody>
