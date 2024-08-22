@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  font-family: "Noto Sans", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+	background-color: bisque;
+}
+
+ /* <uniquifier>: Use a unique and descriptive class name */
+ /* <weight>: Use a value from 100 to 900 */
+
+.noto-sans-main {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+.noto-sans-bold {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@keyframes fade {
+  0% {
+		filter: blur(0);
+    opacity: 1;
+	}
+  100% {
+		filter: blur(50px);
+    opacity: 0;
+	}
+	
+}
+
+@keyframes toColor {
+	0% {
+		filter: grayscale(1);
+		transform: scale(1);
+		z-index: 1;
+	}
+	100% {
+		filter: grayscale(0);
+		transform: scale(1.25);
+		z-index: 5;
+	}
+}

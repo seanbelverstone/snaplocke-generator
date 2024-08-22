@@ -1,0 +1,25 @@
+.cardBasic, .cardDetailed, .imageAndType, .typesSection {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.cardBasic, .cardDetailed {
+	background-color: lightblue;
+	margin: 2px;
+	border-radius: 5%;
+}
+
+.cardBasic, .imageAndType, .typesSection {
+	flex-direction: column;
+}
+
+.cardDetailed {
+	flex-direction: row;
+}
+
+.cardImage {
+	 max-width: 96px;
+	 max-height: 96px;
+	 image-rendering: pixelated
+}

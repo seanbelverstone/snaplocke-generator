@@ -1,6 +1,7 @@
 import React from 'react';
 import toTitleCase from './utils';
 import types from './assets/types/index.js';
+import './styles/PokemonCard.css';
 
 
 function PokemonCard(props) {
@@ -36,31 +37,33 @@ function PokemonCard(props) {
 
   return (
 		<>
+		{/* Basic view */}
 		{detailLevel === 'basic' ? (
-			<div className="card" id={pokemon.name} style={{ animation: animation, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightblue', margin: '2px', borderRadius: '5%' }}> {/* might change the color here */}
-				<img className="cardImage" style={{ maxWidth: '96px', maxHeight: '96px', imageRendering: 'pixelated' }} src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
+			<div className="cardBasic" id={pokemon.name} style={{ animation: animation }}> {/* might change the color here */}
+				<img className="cardImage" src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
 				<p>{toTitleCase(irregularNames.includes(pokemon.name) ? pokemon.name.split('-')[0] : pokemon.name)}</p>
 			</div>
 		) : (
-			<div className="card" id={pokemon.name} style={{ animation: animation, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightblue', margin: '2px', borderRadius: '5%' }}> {/* might change the color here */}
-			<img className="cardImage" style={{ maxWidth: '96px', maxHeight: '96px', imageRendering: 'pixelated' }} src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
+			// Detailed view
+			<div className="cardDetailed" id={pokemon.name} style={{ animation: animation }}> {/* might change the color here */}
+			<div className="imageAndType">
+				<img className="cardImage" src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
+				<div className="typesSection">
+					{renderTypes()}
+				</div>
+			</div>
 			<section>
-				<p>{toTitleCase(irregularNames.includes(pokemon.name) ? pokemon.name.split('-')[0] : pokemon.name)}</p>
+				<span className="noto-sans-bold">{toTitleCase(irregularNames.includes(pokemon.name) ? pokemon.name.split('-')[0] : pokemon.name)}</span>
 				<table>
 					<tbody>
-					<tr>
-							<td style={{ display: 'flex', flexDirection: 'column' }}>
-								{renderTypes()}
-							</td>
-					</tr>
-					<tr>
-						<td>Base Stats</td>
-					</tr>
-					{pokemon.data.stats.map(stat => (
-						<tr key={stat.stat.name}>
-							<td>{`${toTitleCase(stat.stat.name)}: ${stat.base_stat}`}</td>
+						<tr>
+							<td>Base Stats</td>
 						</tr>
-					))}
+						{pokemon.data.stats.map(stat => (
+							<tr key={stat.stat.name}>
+								<td>{`${toTitleCase(stat.stat.name)}: ${stat.base_stat}`}</td>
+							</tr>
+						))}
 					</tbody>
 				</table>
 			</section>

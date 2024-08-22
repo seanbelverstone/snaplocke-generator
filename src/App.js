@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Modal, Select } from '@mui/material';
-import './App.css';
+import './styles/App.css';
 import toTitleCase from './utils';
 import versions, { expansions, starters } from './gameData';
 import Results from './Results';
@@ -141,48 +141,52 @@ function App() {
 				{generationsWithExpansions.includes(selectedVersion) && renderExpansionCheckboxes()}
 
 
-				<div className="misc">
-					<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
-					{(selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow') ? (<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
-						<InputLabel id="demo-simple-select-filled-label">Starter Options</InputLabel>
-						<Select
-							labelId="demo-simple-select-filled-label"
-							id="demo-simple-select-filled"
-							value={starterOption}
-							onChange={handleStarterOptions}
-						>
-							<MenuItem value="noPreference">No preference</MenuItem>
-							<MenuItem value="leaveOne" disabled>Leave only 1</MenuItem>
-							<MenuItem value="leaveOneOrZero" disabled>Leave 1 or 0</MenuItem>
-							{/* TODO: remove disabled checks and implement functionality */}
-							<MenuItem value="chooseOne">Choose one</MenuItem>
-						</Select>
-					</FormControl>) : (
-						<p><i>Starter options are not available for Yellow, Let's Go, Pikachu! or Let's Go, Eevee!</i></p>
-					)}
-					{(starterOption === 'chooseOne' && selectedVersion !== "" && (selectedVersion !== 'letsGoPikachu' || selectedVersion !== 'letsGoEevee' || selectedVersion !== 'yellow')) && (
-						<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
-							<InputLabel id="demo-simple-select-filled-label">Pick your starter</InputLabel>
+				{selectedVersion !== "" && (
+					<>
+						<div className="misc">
+						<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
+						{(selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow') ? (<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+							<InputLabel id="demo-simple-select-filled-label">Starter Options</InputLabel>
 							<Select
 								labelId="demo-simple-select-filled-label"
 								id="demo-simple-select-filled"
-								value={selectedStarter}
-								onChange={handleStarterSelect}
+								value={starterOption}
+								onChange={handleStarterOptions}
 							>
-								{getStarters()}
+								<MenuItem value="noPreference">No preference</MenuItem>
+								<MenuItem value="leaveOne" disabled>Leave only 1</MenuItem>
+								<MenuItem value="leaveOneOrZero" disabled>Leave 1 or 0</MenuItem>
+								{/* TODO: remove disabled checks and implement functionality */}
+								<MenuItem value="chooseOne">Choose one</MenuItem>
 							</Select>
-						</FormControl>
-					)}
-				</div>
-				<Button
-					variant="contained"
-					disabled={selectedVersion === "" || starterOption === "" || (starterOption === "chooseOne" && selectedStarter === "") || submitted}
-					type="submit"
-					style={{ height: '100px', width: '100px' }}
-					onClick={submit}
-				>
-				Generate
-				</Button>
+						</FormControl>) : (
+							<p><i>Starter options are not available for Yellow, Let's Go, Pikachu! or Let's Go, Eevee!</i></p>
+						)}
+						{(starterOption === 'chooseOne' && selectedVersion !== "" && (selectedVersion !== 'letsGoPikachu' || selectedVersion !== 'letsGoEevee' || selectedVersion !== 'yellow')) && (
+							<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+								<InputLabel id="demo-simple-select-filled-label">Pick your starter</InputLabel>
+								<Select
+									labelId="demo-simple-select-filled-label"
+									id="demo-simple-select-filled"
+									value={selectedStarter}
+									onChange={handleStarterSelect}
+								>
+									{getStarters()}
+								</Select>
+							</FormControl>
+						)}
+					</div>
+					<Button
+						variant="contained"
+						disabled={selectedVersion === "" || (selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow' && starterOption === "") || (starterOption === "chooseOne" && selectedStarter === "") || submitted}
+						type="submit"
+						style={{ height: '100px', width: '100px' }}
+						onClick={submit}
+					>
+					Generate
+					</Button>
+				</>
+				)}
 			</div>
 			{submitted && (<Results submitted={submitted} version={selectedVersion} versionRegion={versionRegion} noLegendaries={noLegendaries} selectedStarter={selectedStarter} expansionsSelected={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
 			<span>All images and information are obtained through <a href="https://pokeapi.co/docs/v2#info" target="blank" rel="noreferrer">PokeApi</a> and <a href="https://bulbapedia.bulbagarden.net/wiki/Main_Page" target="blank" rel="noreferrer">Bulbapedia</a>. All rights reserved.</span>
