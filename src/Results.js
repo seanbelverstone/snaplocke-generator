@@ -4,6 +4,7 @@ import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import snapImage from './assets/snap.png';
 import PokemonCard from './PokemonCard';
 import snapSound from './assets/snapSound.mp3';
+import './styles/Results.css';
 
 /* this page will list out the pokemon in different layouts:
  - basic
@@ -108,16 +109,16 @@ function Results(props) {
 	}
 
   return (
-    <div className="results" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="results">
 				{!snapped && (
 					<Button
-						variant="outlined"
+						variant="contained"
 						onClick={snap}
-						style={{ width: 'min-content', display: 'flex', flexDirection: 'column' }}
 						disabled={snapped}
+						id="snapButton"
 					>
-						<img src={snapImage} alt="The Infinity Gauntlet in a snapping pose." style={{ maxWidth: '192px' }} />
-						<span>REMOVE HALF</span>
+						<img id="gauntlet" src={snapImage} alt="The Infinity Gauntlet in a snapping pose." />
+						<h3>REMOVE HALF</h3>
 					</Button>
 
 				)}
@@ -127,6 +128,7 @@ function Results(props) {
 					exclusive
 					onChange={handleDetailLevel}
 					aria-label="detail level"
+					id="detailGroup"
 				>
 					<ToggleButton value="basic" aria-label="basic">
 						Basic
@@ -142,7 +144,7 @@ function Results(props) {
 					/>
 					Export List
 					</Button>*/}
-				<div style={{ width: '80%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+				<div id="cardArea">
 					{dataComplete && pokemonDetails?.map(pokemon => (
 						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} noFairyInGame={gamesWithoutFairy.includes(version)}/>
 						))}

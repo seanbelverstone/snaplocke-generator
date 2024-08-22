@@ -82,15 +82,11 @@ function App() {
 		setSubmitted(true);
 	}
 
-	const style = {
-
-	};
-
   return (
     <div className="page">
 			<img id="snaplockeLogo" src={snaplockeLogo} alt="Snaplocke Generator logo" />
 			<div id="intro">
-			<Button onClick={handleOpen} variant="contained">What is a Snaplocke?</Button>
+			<Button id="introModalButton" onClick={handleOpen} variant="contained">What is a Snaplocke?</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -165,15 +161,15 @@ function App() {
 							</FormControl>
 						)}
 					</div>
-					<Button
+					{!submitted && (<Button
 						className="generateButton"
 						variant="contained"
-						disabled={selectedVersion === "" || (selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow' && starterOption === "") || (starterOption === "chooseOne" && selectedStarter === "") || submitted}
+						disabled={selectedVersion === "" || (selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow' && starterOption === "") || (starterOption === "chooseOne" && selectedStarter === "")}
 						type="submit"
 						onClick={submit}
 					>
 					Generate
-					</Button>
+					</Button>)}
 				</>
 				)}
 			</div>

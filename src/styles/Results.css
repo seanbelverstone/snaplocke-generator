@@ -1,0 +1,41 @@
+.results, #snapButton, #cardArea {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.results, #snapButton {
+	flex-direction: column;
+}
+
+#snapButton {
+	width: min-content;
+	margin-bottom: 40px;
+	box-shadow: 0 0 5px 2.5px black;
+}
+
+#gauntlet {
+	max-width: 192px;
+}
+
+#detailGroup {
+	margin-bottom: -5px;
+	z-index: 0;
+}
+
+#detailGroup button {
+	font-size: 12pt !important;
+	border: solid black 2px;
+	border-radius: 0 10px 0 0 !important;
+}
+
+#detailGroup button:first-child {
+	border-radius: 10px 0 0 0 !important;
+}
+
+#cardArea {
+	 width: 80%;
+	 flex-wrap: wrap;
+	 flex-direction: row;
+	 z-index: 1;
+}
