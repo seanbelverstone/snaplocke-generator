@@ -5,7 +5,7 @@ import types from './assets/types/index.js';
 
 function PokemonCard(props) {
 	const { pokemon, detailLevel, animation, noFairyInGame } = props;
-	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice', 'basculegion-male', 'shaymin-land'];
+	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice', 'basculegion-male', 'shaymin-land', 'enamorus-incarnate', 'urshifu-single-strike'];
 
 	const renderTypes = () => {
 		if (pokemon.data.types.length > 1) {

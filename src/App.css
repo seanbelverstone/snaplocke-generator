@@ -18,3 +18,10 @@
 .versionCard:active {
 	transform: scale(1.05) !important;
 }
+
+.misc {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
