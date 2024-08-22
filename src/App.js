@@ -14,8 +14,8 @@ function App() {
 	const [expansionsSelected, setExpansionsSelected] = useState({
 		isleOfArmor: false,
 		crownTundra: false,
-		tealMask: false, // teal mask
-		indigoDisk: false // indigo disk
+		tealMask: false,
+		indigoDisk: false
 	});
 	const [noLegendaries, setNoLegendaries]  = useState(false);
 	const [starterOption, setStarterOption] = useState("");
@@ -26,8 +26,7 @@ function App() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 	
-	// Maybe have an option to either choose a starter/a starter is chosen randomly/two or all starters can be snapped
-	// fix border addition moving other games, maybe add padding/margin
+	// TODO: fix border addition moving other games, maybe add padding/margin
 
 	const renderExpansionCheckboxes = () => {
 		return (
