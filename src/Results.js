@@ -112,7 +112,7 @@ function Results(props) {
   return (
     <div className="results">
 				{snapped ? (
-					<ScreenshotButton version={version}/>
+					<ScreenshotButton version={version} detailLevel={detailLevel} />
 				) : (
 					<Button
 						variant="contained"
