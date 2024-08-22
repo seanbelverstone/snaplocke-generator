@@ -121,7 +121,7 @@ function Results(props) {
 						id="snapButton"
 					>
 						<img id="gauntlet" src={snapImage} alt="The Infinity Gauntlet in a snapping pose." />
-						<h3>REMOVE HALF</h3>
+						<h3 id="snapButtonText">REMOVE HALF</h3>
 					</Button>
 
 				)}

@@ -28,7 +28,7 @@ const ScreenshotButton = (props) => {
 	}
 
 	return (
-		<Button variant="contained" color="success" disabled={disabled} onClick={screenshot} style={{ width: '100%', marginBottom: '30px', boxShadow: '0 0 5px 2.5px black' }}>Download results screenshot</Button>
+		<Button variant="contained" color="success" disabled={disabled} onClick={screenshot} style={{ width: '100%', maxWidth: '1000px', marginBottom: '30px', boxShadow: '0 0 5px 2.5px black' }}>Download results screenshot</Button>
 	)
 }
 
