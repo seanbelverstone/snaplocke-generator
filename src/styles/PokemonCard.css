@@ -8,6 +8,7 @@
 	background-color: lightblue;
 	margin: 2px;
 	border-radius: 5%;
+	box-shadow: 0 0 5px 2.5px black;
 }
 
 .cardBasic, .imageAndType, .typesSection {

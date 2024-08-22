@@ -83,25 +83,13 @@ function App() {
 	}
 
 	const style = {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%, -50%)',
-		bgcolor: 'background.paper',
-		border: '2px solid #000',
-		boxShadow: 24,
-		p: 4,
-		width: '50%',
-		height: '500px',
-		overflowY: 'scroll',
-		display: 'flex',
-		flexDirection: 'column'
+
 	};
 
   return (
-    <div className="page" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-			<img src={snaplockeLogo} alt="Snaplocke Generator logo" style={{ width: '100%' }} />
-			<div id="intro" style={{  }}>
+    <div className="page">
+			<img id="snaplockeLogo" src={snaplockeLogo} alt="Snaplocke Generator logo" />
+			<div id="intro">
 			<Button onClick={handleOpen} variant="contained">What is a Snaplocke?</Button>
 			<Modal
 				open={open}
@@ -109,11 +97,11 @@ function App() {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box id="modalBox" sx={style}>
-					<Button onClick={handleClose} variant="contained" style={{ position: 'absolute', right: '3%' }}>Close</Button>
+				<Box id="modalBox" sx={{ boxShadow: 24, p: 4 }}>
+					<Button className="modalCloseButton" onClick={handleClose} variant="contained">Close</Button>
 					<h3>What is a Snaplocke?</h3>
 					<p>A snaplocke is a variation on a <a href="https://bulbapedia.bulbagarden.net/wiki/Nuzlocke_Challenge" target="_blank" rel="noreferrer">nuzlocke</a> in which half of a game's possible encounters are "snapped" as if Thanos had wiped them out of existence.</p>
-					<img src={thanos} alt="Marvel Studio's Thanos snapping his fingers"/>
+					<img id="thanos" src={thanos} alt="Marvel Studio's Thanos snapping his fingers"/>
 					<p> In reality, it means that the only pokemon left are considered eligible encounters. As far as I am aware, the nuzlocke variant appeared first in <a href="https://youtu.be/KU5WsWyqeDE?si=XjKOKbhxQ5uyQegl" target="_blank" rel="noreferrer">Flygon HG's excellent video</a>, where his chat voted on which Pokemon to remove. Without having a Twitch chat or large community to vote on the encounters, the next best option for someone else to try the format is to randomly remove them.</p>
 					<h3>How to use the generator?</h3>
 					<ul>
@@ -123,16 +111,15 @@ function App() {
 						<li>Snap Thanos' fingers! This will remove half of the available encounters from the list.</li>
 					</ul>
 					<p>And enjoy! I would recommend taking a screenshot of the page to keep your results safe for future reference.</p>
-					<Button onClick={handleClose} variant="contained">Close</Button>
 				</Box>
 			</Modal>
 
 			</div>
-			<div id="form" style={{ width: '80%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
-				<div className="versionSelect" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+			<div id="form">
+				<div className="versionSelect">
 					{games.map(game => (
-						<div className="versionCard" key={game.value} onClick={handleChange} value={game.value} style={{ display: 'flex', flexDirection: 'column', margin: '2px', justifyContent: 'center', alignItems: 'center', ...selectedVersion === game.value && { filter: "grayscale(0)", border: 'solid 2px gold', boxShadow: '0 0 5px 2.5px #fff, 0 0 10px 5px #f0f, 0 0 15px 7.5px #0ff' } }}>
-							<img className="versionImage" src={game.src} alt={`The cover art for ${game.name}`}  value={game.value} style={{ maxWidth: '96px' }} />
+						<div className="versionCard" key={game.value} onClick={handleChange} value={game.value} style={{ ...selectedVersion === game.value && { filter: "grayscale(0)", border: 'solid 2px gold', boxShadow: '0 0 5px 2.5px #fff, 0 0 10px 5px #f0f, 0 0 15px 7.5px #0ff' } }}>
+							<img className="versionImage" src={game.src} alt={`The cover art for ${game.name}`}  value={game.value} />
 							<span value={game.value} style={{ ...selectedVersion === game.value && { color: 'gold' } }}>{game.name}</span>
 						</div>
 					))}
@@ -144,14 +131,15 @@ function App() {
 				{selectedVersion !== "" && (
 					<>
 						<div className="misc">
-						<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
+						<FormControlLabel className="banLegendariesCheckbox" control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
 						{(selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow') ? (<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
 							<InputLabel id="demo-simple-select-filled-label">Starter Options</InputLabel>
 							<Select
-								labelId="demo-simple-select-filled-label"
-								id="demo-simple-select-filled"
+								labelId="starterOptions"
+								id="starterOptions"
 								value={starterOption}
 								onChange={handleStarterOptions}
+								className="starterDropdown"
 							>
 								<MenuItem value="noPreference">No preference</MenuItem>
 								<MenuItem value="leaveOne" disabled>Leave only 1</MenuItem>
@@ -164,12 +152,13 @@ function App() {
 						)}
 						{(starterOption === 'chooseOne' && selectedVersion !== "" && (selectedVersion !== 'letsGoPikachu' || selectedVersion !== 'letsGoEevee' || selectedVersion !== 'yellow')) && (
 							<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
-								<InputLabel id="demo-simple-select-filled-label">Pick your starter</InputLabel>
+								<InputLabel id="starterSelectLabel">Pick your starter</InputLabel>
 								<Select
-									labelId="demo-simple-select-filled-label"
-									id="demo-simple-select-filled"
+									labelId="starterSelect"
+									id="starterSelect"
 									value={selectedStarter}
 									onChange={handleStarterSelect}
+									className="starterDropdown"
 								>
 									{getStarters()}
 								</Select>
@@ -177,10 +166,10 @@ function App() {
 						)}
 					</div>
 					<Button
+						className="generateButton"
 						variant="contained"
 						disabled={selectedVersion === "" || (selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow' && starterOption === "") || (starterOption === "chooseOne" && selectedStarter === "") || submitted}
 						type="submit"
-						style={{ height: '100px', width: '100px' }}
 						onClick={submit}
 					>
 					Generate
