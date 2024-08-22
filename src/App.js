@@ -140,7 +140,7 @@ function App() {
 
 				<div className="misc">
 					<FormControlLabel control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
-					{(selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee') && (<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+					{(selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow') ? (<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
 						<InputLabel id="demo-simple-select-filled-label">Starter Options</InputLabel>
 						<Select
 							labelId="demo-simple-select-filled-label"
@@ -154,7 +154,9 @@ function App() {
 							{/* TODO: remove disabled checks and implement functionality */}
 							<MenuItem value="chooseOne">Choose one</MenuItem>
 						</Select>
-					</FormControl>)}
+					</FormControl>) : (
+						<p><i>Starter options are not available for Yellow, Let's Go, Pikachu! or Let's Go, Eevee!</i></p>
+					)}
 					{(starterOption === 'chooseOne' && selectedVersion !== "" && (selectedVersion !== 'letsGoPikachu' || selectedVersion !== 'letsGoEevee' || selectedVersion !== 'yellow')) && (
 						<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
 							<InputLabel id="demo-simple-select-filled-label">Pick your starter</InputLabel>
