@@ -1,0 +1,37 @@
+.cardBasic, .cardDetailed, .imageAndType, .typesSection {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.cardBasic, .cardDetailed {
+	background-color: lightblue;
+	margin: 2px;
+	border-radius: 5%;
+	box-shadow: 0 0 5px 2.5px black;
+}
+
+.cardBasic, .imageAndType, .typesSection {
+	flex-direction: column;
+}
+
+.cardDetailed {
+	flex-direction: row;
+	padding: 10px;
+	width: 300px;
+}
+
+.cardImage {
+	 max-width: 96px;
+	 max-height: 96px;
+	 image-rendering: pixelated
+}
+
+.typeImage {
+	max-width: 70px;
+}
+
+.statValue {
+	font-weight: bold;
+	margin-left: 5px;
+}
