@@ -48,11 +48,17 @@ function Results(props) {
 		// if legendaries are allowed, append them to the list
 		const pokemonList = noLegendaries ? pokemonPerVersion[version] : [...pokemonPerVersion[version], ...legendaries[version]];
 		// if a specific starter has been chosen, append it to the list
-		const pokemonListWithStarters = selectedStarter === '' ? [...starters[versionRegion], ...pokemonList] : [selectedStarter, ...pokemonList]
+		const pokemonListWithStarters = () => {
+			if (version !== 'letsGoPikachu' || version !== 'letsGoEevee' || version !== 'yellow') {
+				return selectedStarter === '' ? [...starters[versionRegion], ...pokemonList] : [selectedStarter, ...pokemonList]
+			}
+			return pokemonList;
+		}
+		const finalPokemonList = pokemonListWithStarters();
 		// if an expansion/s has/have been selected, add their pokemon to the list
-		expansionsSelected.length > 0 && expansionsSelected.forEach(exp => pokemonListWithStarters.push(...pokemonPerVersion[exp][version]));
-		setPokemon(pokemonListWithStarters)
-		const spritePromise = pokemonListWithStarters.map(async name => {
+		expansionsSelected.length > 0 && expansionsSelected.forEach(exp => finalPokemonList.push(...pokemonPerVersion[exp][version]));
+		setPokemon(finalPokemonList)
+		const spritePromise = finalPokemonList.map(async name => {
 			return await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
 				.then(response => response.json())
 				.then(data => ({name: name, data: data}))

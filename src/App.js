@@ -155,7 +155,7 @@ function App() {
 							<MenuItem value="chooseOne">Choose one</MenuItem>
 						</Select>
 					</FormControl>)}
-					{(starterOption === 'chooseOne' && selectedVersion !== "") && (
+					{(starterOption === 'chooseOne' && selectedVersion !== "" && (selectedVersion !== 'letsGoPikachu' || selectedVersion !== 'letsGoEevee' || selectedVersion !== 'yellow')) && (
 						<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
 							<InputLabel id="demo-simple-select-filled-label">Pick your starter</InputLabel>
 							<Select
