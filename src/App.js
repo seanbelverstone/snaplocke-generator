@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Modal, Select } from '@mui/material';
 import './App.css';
 import toTitleCase from './utils';
-import versions, { expansions } from './gameData';
+import versions, { expansions, starters } from './gameData';
 import Results from './Results';
 import snaplockeLogo from './assets/snaplockeLogo.png';
 import games from './assets/games';
@@ -10,14 +10,16 @@ import thanos from './assets/thanos.jpeg';
 
 function App() {
 	const [selectedVersion, setSelectedVersion] = useState("");
+	const [versionRegion, setVersionRegion] = useState("");
 	const [expansionsSelected, setExpansionsSelected] = useState({
 		isleOfArmor: false,
 		crownTundra: false,
-		kitakami: false, // teal mask
-		blueberry: false // indigo disk
+		tealMask: false, // teal mask
+		indigoDisk: false // indigo disk
 	});
 	const [noLegendaries, setNoLegendaries]  = useState(false);
 	const [starterOption, setStarterOption] = useState("");
+	const [selectedStarter, setSelectedStarter] = useState("");
 	const [submitted, setSubmitted] = useState(false);
 	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	const [open, setOpen] = React.useState(false);
@@ -28,38 +30,28 @@ function App() {
 	// fix border addition moving other games, maybe add padding/margin
 
 	const renderExpansionCheckboxes = () => {
-		if (selectedVersion === 'sword' || selectedVersion === 'shield') {
-			return (
-				<div>
-				<p>Include Expansions?</p>
-				{expansions.genEight.map(dlc => {
-					return (
-					<FormControlLabel key={dlc} control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={toTitleCase(dlc)} value={expansionsSelected[dlc]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })} />
-				)})}
-				</div>
-			)
-		}
-		if (selectedVersion === 'scarlet' || selectedVersion === 'violet') {
-			return (
-				<div>
-				<p>Include Expansions?</p>
-				{expansions.genNine.map(dlc => (
-					<FormControlLabel key={dlc.name} control={<Checkbox checked={expansionsSelected[dlc.route] || false} />} label={toTitleCase(dlc.name)} value={expansionsSelected[dlc.route]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc.route]: e.target.checked })} />
-				))}
-				</div>
-			)
-		}
+		return (
+			<div>
+			<p>Include Expansions?</p>
+			{expansions[selectedVersion === 'sword' || selectedVersion === 'shield' ? 'genEight' : 'genNine'].map(dlc => {
+				return (
+				<FormControlLabel key={dlc} control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={toTitleCase(dlc)} value={expansionsSelected[dlc]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })} />
+			)})}
+			</div>
+		)
 	}
 
 	const handleChange = (e) => {
 		setSubmitted(false);
 		setStarterOption("");
 		setSelectedVersion(e.target.getAttribute('value'))
+		setSelectedStarter("");
+		setVersionRegion(Object.entries(versions).filter(([name, array]) => array.includes(e.target.getAttribute('value')))[0][0])
 		setExpansionsSelected({
 			isleOfArmor: false,
 			crownTundra: false,
-			kitakami: false,
-			blueberry: false
+			tealMask: false,
+			indigoDisk: false
 		})
 	}
 
@@ -70,6 +62,16 @@ function App() {
 
 	const handleStarterOptions = (e) => {
 		setStarterOption(e.target.value);
+	}
+
+	const handleStarterSelect = (e) => {
+		setSelectedStarter(e.target.value);
+	}
+
+	const getStarters = () => {
+		return starters[versionRegion].map(starter => (
+			<MenuItem key={starter} value={starter}>{toTitleCase(starter)}</MenuItem>
+		))
 	}
 
 	const submit = (e) => {
@@ -147,21 +149,22 @@ function App() {
 							onChange={handleStarterOptions}
 						>
 							<MenuItem value="noPreference">No preference</MenuItem>
-							<MenuItem value="leaveOne">Leave only 1</MenuItem>
-							<MenuItem value="leaveOneOrZero">Leave 1 or 0</MenuItem>
+							<MenuItem value="leaveOne" disabled>Leave only 1</MenuItem>
+							<MenuItem value="leaveOneOrZero" disabled>Leave 1 or 0</MenuItem>
+							{/* TODO: remove disabled checks and implement functionality */}
 							<MenuItem value="chooseOne">Choose one</MenuItem>
 						</Select>
 					</FormControl>)}
 					{(starterOption === 'chooseOne' && selectedVersion !== "") && (
 						<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+							<InputLabel id="demo-simple-select-filled-label">Pick your starter</InputLabel>
 							<Select
 								labelId="demo-simple-select-filled-label"
 								id="demo-simple-select-filled"
-								value={starterOption}
-								onChange={handleStarterOptions}
-								defaultValue='noPreference'
+								value={selectedStarter}
+								onChange={handleStarterSelect}
 							>
-								{/* {versions.} */}
+								{getStarters()}
 							</Select>
 						</FormControl>
 					)}
@@ -176,7 +179,7 @@ function App() {
 				Generate
 				</Button>
 			</div>
-			{submitted && (<Results submitted={submitted} version={selectedVersion} noLegendaries={noLegendaries} expansions={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
+			{submitted && (<Results submitted={submitted} version={selectedVersion} versionRegion={versionRegion} noLegendaries={noLegendaries} selectedStarter={selectedStarter} expansionsSelected={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
 			<span>All images and information are obtained through <a href="https://pokeapi.co/docs/v2#info" target="blank" rel="noreferrer">PokeApi</a> and <a href="https://bulbapedia.bulbagarden.net/wiki/Main_Page" target="blank" rel="noreferrer">Bulbapedia</a>. All rights reserved.</span>
 		</div>
 

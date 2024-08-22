@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { gamesWithoutFairy, legendaries, pokemonPerVersion } from './gameData';
+import { gamesWithoutFairy, legendaries, pokemonPerVersion, starters } from './gameData';
 import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import snapImage from './assets/snap.png';
 import PokemonCard from './PokemonCard';
@@ -14,12 +14,9 @@ import snapSound from './assets/snapSound.mp3';
 		abilities
 */
 
-// append expansionData results
 
 function Results(props) {
-	const { submitted, version, noLegendaries
-		// , expansions 
-		} = props;
+	const { submitted, version, versionRegion, noLegendaries, selectedStarter, expansionsSelected } = props;
 	// eslint-disable-next-line no-unused-vars
 	const [pokemon, setPokemon] = useState([]);
 	const [pokemonDetails, setPokemonDetails] = useState([]);
@@ -48,10 +45,14 @@ function Results(props) {
 	}
 
 	const getSprites = async () => {
+		// if legendaries are allowed, append them to the list
 		const pokemonList = noLegendaries ? pokemonPerVersion[version] : [...pokemonPerVersion[version], ...legendaries[version]];
-		// expansions ? + expansion to list
-		setPokemon(pokemonList)
-		const spritePromise = pokemonList.map(async name => {
+		// if a specific starter has been chosen, append it to the list
+		const pokemonListWithStarters = selectedStarter === '' ? [...starters[versionRegion], ...pokemonList] : [selectedStarter, ...pokemonList]
+		// if an expansion/s has/have been selected, add their pokemon to the list
+		expansionsSelected.length > 0 && expansionsSelected.forEach(exp => pokemonListWithStarters.push(...pokemonPerVersion[exp][version]));
+		setPokemon(pokemonListWithStarters)
+		const spritePromise = pokemonListWithStarters.map(async name => {
 			return await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
 				.then(response => response.json())
 				.then(data => ({name: name, data: data}))
@@ -72,10 +73,20 @@ function Results(props) {
 
 		const newPokemonList = [ ...pokemonDetails ];
 		const deletedPokemonList = [];
+		// maps through the copied list and pushes half randomly to the deleted pokemon list
 		for (let i = newPokemonList.length; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
 			deletedPokemonList.push(newPokemonList.splice(Math.floor(Math.random() * newPokemonList.length), 1));
 		}
-
+		const deletedPokemonListNames = deletedPokemonList.flatMap(val => val).map(mon => mon.name);
+		// if there is a starter selected and the name list includes it, we want to remove it from that list and re-add it to the "safe" mon list
+		if (selectedStarter !== '' && deletedPokemonListNames.includes(selectedStarter)) {
+			const index = deletedPokemonListNames.indexOf(selectedStarter);
+			if (index > -1) {
+				deletedPokemonList.splice(index, 1);
+				newPokemonList.unshift(Object.values(pokemonDetails).filter(mon => mon.name === selectedStarter)[0]);
+			}
+		}
+		// redefining the deleted name list here to ensure we're not missing it.
 		setDeletedPokemon(deletedPokemonList.flatMap(val => val).map(mon => mon.name));
 		setAnimation('fade 2s forwards');
 		setSnapped(true);
