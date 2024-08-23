@@ -7,6 +7,7 @@ import Results from './Results';
 import snaplockeLogo from './assets/snaplockeLogo.png';
 import games from './assets/games';
 import thanos from './assets/thanos.jpeg';
+import ReactGA from 'react-ga4';
 
 function App() {
 	const [selectedVersion, setSelectedVersion] = useState("");
@@ -25,6 +26,10 @@ function App() {
 	const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+	ReactGA.send({
+		hitType: 'pageview'
+	});
 	
 	// TODO: fix border addition moving other games, maybe add padding/margin
 
