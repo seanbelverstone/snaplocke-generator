@@ -104,6 +104,8 @@
 	width: 100%;
 	text-align: center;
 	font-size: 75%;
+	margin-top: 40px;
+	bottom: 0;
 }
 
 @media (max-width: 1870px) {
