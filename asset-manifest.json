@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/snaplocke-generator/static/css/main.2c93cee1.css",
-    "main.js": "/snaplocke-generator/static/js/main.5cca7f8e.js",
+    "main.css": "/snaplocke-generator/static/css/main.50d6c56b.css",
+    "main.js": "/snaplocke-generator/static/js/main.422ce8e8.js",
     "static/js/453.c24acea7.chunk.js": "/snaplocke-generator/static/js/453.c24acea7.chunk.js",
     "static/media/snap.png": "/snaplocke-generator/static/media/snap.6bce4ff947a9d2252683.png",
     "static/media/violet.png": "/snaplocke-generator/static/media/violet.cee63ec63a50be36c5ac.png",
@@ -45,12 +45,12 @@
     "static/media/pearl.jpg": "/snaplocke-generator/static/media/pearl.6d333d3a7df139223107.jpg",
     "static/media/diamond.jpg": "/snaplocke-generator/static/media/diamond.1034b901b3ba90d4513e.jpg",
     "index.html": "/snaplocke-generator/index.html",
-    "main.2c93cee1.css.map": "/snaplocke-generator/static/css/main.2c93cee1.css.map",
-    "main.5cca7f8e.js.map": "/snaplocke-generator/static/js/main.5cca7f8e.js.map",
+    "main.50d6c56b.css.map": "/snaplocke-generator/static/css/main.50d6c56b.css.map",
+    "main.422ce8e8.js.map": "/snaplocke-generator/static/js/main.422ce8e8.js.map",
     "453.c24acea7.chunk.js.map": "/snaplocke-generator/static/js/453.c24acea7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2c93cee1.css",
-    "static/js/main.5cca7f8e.js"
+    "static/css/main.50d6c56b.css",
+    "static/js/main.422ce8e8.js"
   ]
 }
