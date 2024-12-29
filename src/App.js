@@ -19,8 +19,10 @@ function App() {
 		indigoDisk: false
 	});
 	const [noLegendaries, setNoLegendaries]  = useState(false);
+	const [twoPlayerMode, setTwoPlayerMode]  = useState(false);
 	const [starterOption, setStarterOption] = useState("");
 	const [selectedStarter, setSelectedStarter] = useState("");
+	const [playerTwoStarter, setPlayerTwoStarter] = useState("");
 	const [submitted, setSubmitted] = useState(false);
 	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	const [open, setOpen] = React.useState(false);
@@ -50,6 +52,7 @@ function App() {
 		setStarterOption("");
 		setSelectedVersion(e.target.getAttribute('value'))
 		setSelectedStarter("");
+		setPlayerTwoStarter("");
 		setVersionRegion(Object.entries(versions).filter(([name, array]) => array.includes(e.target.getAttribute('value')))[0][0])
 		setExpansionsSelected({
 			isleOfArmor: false,
@@ -64,15 +67,28 @@ function App() {
 		setNoLegendaries(e.target.checked)
 	}
 
+	const handleTwoPlayerMode = (e) => {
+		setSubmitted(false);
+		setTwoPlayerMode(e.target.checked)
+		e.target.checked === false && setPlayerTwoStarter("");
+		console.log(e.target.checked);
+	}
+
 	const handleStarterOptions = (e) => {
 		setSubmitted(false);
 		setSelectedStarter('');
+		setPlayerTwoStarter("");
 		setStarterOption(e.target.value);
 	}
 
 	const handleStarterSelect = (e) => {
 		setSubmitted(false);
 		setSelectedStarter(e.target.value);
+	}
+
+	const handlePlayerTwoStarter = (e) => {
+		setSubmitted(false);
+		setPlayerTwoStarter(e.target.value);
 	}
 
 	const getStarters = () => {
@@ -134,6 +150,7 @@ function App() {
 					<>
 						<div className="misc">
 						<FormControlLabel className="banLegendariesCheckbox" control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
+						<FormControlLabel className="twoPlayerMode" control={<Checkbox />} label="Two Player Mode" value={twoPlayerMode} onChange={handleTwoPlayerMode} />
 						{(selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow') ? (<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
 							<InputLabel id="demo-simple-select-filled-label">Starter Options</InputLabel>
 							<Select
@@ -153,18 +170,35 @@ function App() {
 							<p><i>Starter options are not available for Yellow, Let's Go, Pikachu! or Let's Go, Eevee!</i></p>
 						)}
 						{(starterOption === 'chooseOne' && selectedVersion !== "" && (selectedVersion !== 'letsGoPikachu' || selectedVersion !== 'letsGoEevee' || selectedVersion !== 'yellow')) && (
-							<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
-								<InputLabel id="starterSelectLabel">Pick your starter</InputLabel>
-								<Select
-									labelId="starterSelect"
-									id="starterSelect"
-									value={selectedStarter}
-									onChange={handleStarterSelect}
-									className="starterDropdown"
-								>
-									{getStarters()}
-								</Select>
-							</FormControl>
+							<>
+								<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+									<InputLabel id="starterSelectLabel">{twoPlayerMode ? `Pick Player 1's Starter` : 'Pick your starter'}</InputLabel>
+									<Select
+										labelId="starterSelect"
+										id="starterSelect"
+										value={selectedStarter}
+										onChange={handleStarterSelect}
+										className="starterDropdown"
+									>
+										{getStarters()}
+									</Select>
+								</FormControl>
+								{twoPlayerMode && (
+									<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+										<InputLabel id="starterSelectLabel">Pick Player 2's Starter</InputLabel>
+										<Select
+											labelId="starterSelect"
+											id="starterSelect"
+											value={playerTwoStarter}
+											onChange={handlePlayerTwoStarter}
+											className="starterDropdown"
+										>
+											{getStarters()}
+										</Select>
+									</FormControl>
+								)}
+							</>
+
 						)}
 					</div>
 					{!submitted && (<Button
