@@ -37,12 +37,14 @@ function App() {
 
 	const renderExpansionCheckboxes = () => {
 		return (
-			<div>
-			<p>Include Expansions?</p>
-			{expansions[selectedVersion === 'sword' || selectedVersion === 'shield' ? 'genEight' : 'genNine'].map(dlc => {
-				return (
-				<FormControlLabel key={dlc} control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={toTitleCase(dlc)} value={expansionsSelected[dlc]} onChange={e => setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })} />
-			)})}
+			<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+				<p style={{ marginBottom: '0', textDecoration: 'underline' }}>Include Expansions?</p>
+				<div>
+					{expansions[selectedVersion === 'sword' || selectedVersion === 'shield' ? 'genEight' : 'genNine'].map(dlc => {
+						return (
+						<FormControlLabel key={dlc} control={<Checkbox checked={expansionsSelected[dlc] || false} />} label={toTitleCase(dlc)} value={expansionsSelected[dlc]} onChange={e => handleSetExpansions(e, dlc)} />
+					)})}
+				</div>
 			</div>
 		)
 	}
@@ -62,6 +64,11 @@ function App() {
 		})
 	}
 
+	const handleSetExpansions = (e, dlc) => {
+		setSubmitted(false)
+		setExpansionsSelected({ ...expansionsSelected, [dlc]: e.target.checked })
+	}
+
 	const handleSetLegendaries = (e) => {
 		setSubmitted(false);
 		setNoLegendaries(e.target.checked)
@@ -77,6 +84,20 @@ function App() {
 		setSubmitted(false);
 		setSelectedStarter('');
 		setPlayerTwoStarter("");
+		if (e.target.value === 'leaveOne') {
+			const randomPlayerOneStarter = starters[versionRegion][Math.floor(Math.random() * 3)];
+			setSelectedStarter(randomPlayerOneStarter)
+			if (twoPlayerMode) {
+				let randomPlayerTwoStater = starters[versionRegion][Math.floor(Math.random() * 3)];
+				do {
+					randomPlayerTwoStater = starters[versionRegion][Math.floor(Math.random() * 3)]
+					console.log('playerOne: ', randomPlayerOneStarter, 'playerTwo: ', randomPlayerTwoStater)
+				}
+				while (randomPlayerTwoStater === randomPlayerOneStarter);
+				console.log('playerOne: ', randomPlayerOneStarter, 'playerTwo: ', randomPlayerTwoStater)
+				setPlayerTwoStarter(randomPlayerTwoStater);
+			}
+		}
 		setStarterOption(e.target.value);
 	}
 
@@ -142,12 +163,10 @@ function App() {
 					))}
 				</div>
 
-				{generationsWithExpansions.includes(selectedVersion) && renderExpansionCheckboxes()}
-
-
 				{selectedVersion !== "" && (
 					<>
 						<div className="misc">
+						{generationsWithExpansions.includes(selectedVersion) && renderExpansionCheckboxes()}
 						<FormControlLabel className="banLegendariesCheckbox" control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
 						<FormControlLabel className="twoPlayerMode" control={<Checkbox />} label="Two Player Mode" value={twoPlayerMode} onChange={handleTwoPlayerMode} />
 						{(selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow') ? (<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
@@ -160,10 +179,8 @@ function App() {
 								className="starterDropdown"
 							>
 								<MenuItem value="noPreference">No preference</MenuItem>
-								<MenuItem value="leaveOne" disabled>Leave only 1</MenuItem>
-								<MenuItem value="leaveOneOrZero" disabled>Leave 1 or 0</MenuItem>
-								{/* TODO: remove disabled checks and implement functionality */}
-								<MenuItem value="chooseOne">Choose one</MenuItem>
+								<MenuItem value="leaveOne">{`${twoPlayerMode ? 'Each player gets a different choice' : 'Keep a random choice'}`}</MenuItem>
+								<MenuItem value="chooseOne">Pick one</MenuItem>
 							</Select>
 						</FormControl>) : (
 							<p><i>Starter options are not available for Yellow, Let's Go, Pikachu! or Let's Go, Eevee!</i></p>
