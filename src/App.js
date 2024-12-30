@@ -92,7 +92,7 @@ function App() {
 
 	const getStarters = () => {
 		return starters[versionRegion].map(starter => (
-			<MenuItem key={starter} value={starter}>{toTitleCase(starter)}</MenuItem>
+			<MenuItem key={starter} value={starter} disabled={twoPlayerMode ? starter === selectedStarter || starter === playerTwoStarter : false}>{toTitleCase(starter)}</MenuItem>
 		))
 	}
 

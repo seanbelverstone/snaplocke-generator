@@ -22,6 +22,7 @@ function Results(props) {
 	// eslint-disable-next-line no-unused-vars
 	const [pokemon, setPokemon] = useState([]);
 	const [pokemonDetails, setPokemonDetails] = useState([]);
+	const [playerTwoPokemonDetails, setPlayerTwoPokemonDetails] = useState([]);
 	const [dataComplete, setDataComplete] = useState(false);
 	const [deletedPokemon, setDeletedPokemon] = useState([]);
 	const [animation, setAnimation] = useState('none');
@@ -57,7 +58,10 @@ function Results(props) {
 			}
 			return pokemonList;
 		}
-		const finalPokemonList = pokemonListWithStarters();
+		let finalPokemonList = pokemonListWithStarters();
+		if (twoPlayerMode && playerTwoStarter !== '') {
+			finalPokemonList = [playerTwoStarter, ...finalPokemonList];
+		}
 		// if an expansion/s has/have been selected, add their pokemon to the list
 		expansionsSelected.length > 0 && expansionsSelected.forEach(exp => finalPokemonList.push(...pokemonPerVersion[exp][version]));
 		setPokemon(finalPokemonList)
@@ -86,6 +90,7 @@ function Results(props) {
 		for (let i = newPokemonList.length; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
 			deletedPokemonList.push(newPokemonList.splice(Math.floor(Math.random() * newPokemonList.length), 1));
 		}
+		const mainPokemonListNames = newPokemonList.flatMap(val => val).map(mon => mon.name);
 		const deletedPokemonListNames = deletedPokemonList.flatMap(val => val).map(mon => mon.name);
 		// if there is a starter selected and the name list includes it, we want to remove it from that list and re-add it to the "safe" mon list
 		if (selectedStarter !== '' && deletedPokemonListNames.includes(selectedStarter)) {
@@ -95,12 +100,21 @@ function Results(props) {
 				newPokemonList.unshift(Object.values(pokemonDetails).filter(mon => mon.name === selectedStarter)[0]);
 			}
 		}
+		// if player two's starter is in list 1, then we want to make sure it's in the correct list
+		if (twoPlayerMode && playerTwoStarter !== '' && mainPokemonListNames.includes(playerTwoStarter)) {
+			const index = mainPokemonListNames.indexOf(playerTwoStarter);
+			if (index > -1) {
+				newPokemonList.splice(index, 1);
+				deletedPokemonList.unshift(Object.values(pokemonDetails).filter(mon => mon.name === playerTwoStarter)[0]);
+			}
+		}
 		// redefining the deleted name list here to ensure we're not missing it.
 		setDeletedPokemon(deletedPokemonList.flatMap(val => val).map(mon => mon.name));
 		setAnimation('fade 2s forwards');
 		setSnapped(true);
 		setTimeout(() => {
 			setPokemonDetails(newPokemonList);
+			twoPlayerMode && setPlayerTwoPokemonDetails(deletedPokemonList.flatMap(val => val));
 			setAnimation('none');
 		}, 2000)
 
