@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { gamesWithoutFairy, legendaries, pokemonPerVersion, starters } from './gameData';
-import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button, Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import snapImage from './assets/snap.png';
 import PokemonCard from './PokemonCard';
 import snapSound from './assets/snapSound.mp3';
@@ -28,7 +28,7 @@ function Results(props) {
 	const [animation, setAnimation] = useState('none');
 	const [snapped, setSnapped] = useState(false);
 	const [detailLevel, setDetailLevel] = useState('basic');
-	const [playerTwoDetailLevel, setPlayerTwoDetailLevel] = useState('basic');
+	const [playerTwoView, setPlayerTwoView] = useState(false);
 
 	useEffect(() => {
 		setDataComplete(false);
@@ -100,21 +100,23 @@ function Results(props) {
 				newPokemonList.unshift(Object.values(pokemonDetails).filter(mon => mon.name === selectedStarter)[0]);
 			}
 		}
+		// Sorting the deleted pokemon
+		const sortedDeletedPokemonList = deletedPokemonList.flatMap(val => val).sort((a, b) => pokemonDetails.indexOf(a) - pokemonDetails.indexOf(b));
 		// if player two's starter is in list 1, then we want to make sure it's in the correct list
 		if (twoPlayerMode && playerTwoStarter !== '' && mainPokemonListNames.includes(playerTwoStarter)) {
 			const index = mainPokemonListNames.indexOf(playerTwoStarter);
 			if (index > -1) {
 				newPokemonList.splice(index, 1);
-				deletedPokemonList.unshift(Object.values(pokemonDetails).filter(mon => mon.name === playerTwoStarter)[0]);
+				sortedDeletedPokemonList.unshift(Object.values(pokemonDetails).filter(mon => mon.name === playerTwoStarter)[0]);
 			}
 		}
 		// redefining the deleted name list here to ensure we're not missing it.
-		setDeletedPokemon(deletedPokemonList.flatMap(val => val).map(mon => mon.name));
+		setDeletedPokemon(sortedDeletedPokemonList.map(mon => mon.name));
 		setAnimation('fade 2s forwards');
 		setSnapped(true);
 		setTimeout(() => {
 			setPokemonDetails(newPokemonList);
-			twoPlayerMode && setPlayerTwoPokemonDetails(deletedPokemonList.flatMap(val => val));
+			twoPlayerMode && setPlayerTwoPokemonDetails(sortedDeletedPokemonList);
 			setAnimation('none');
 		}, 2000)
 
@@ -126,10 +128,8 @@ function Results(props) {
 		}
 	}
 
-	const handlePlayerTwoDetailLevel = (event, value) => {
-		if (value !== null) {
-			setPlayerTwoDetailLevel(value);
-		}
+	const handlePlayerSwitch = (event, val) => {
+		setPlayerTwoView(val);
 	}
 
   return (
@@ -148,46 +148,13 @@ function Results(props) {
 					</Button>
 
 				)}
-				{twoPlayerMode ? (
-					<div style={{ display: 'flex', flexDirection: 'row'}}>
-						<div style={{ display: 'flex', flexDirection: 'column'}}>
-							<h3>Player 1</h3>
-							<ToggleButtonGroup
-								color="primary"
-								value={detailLevel}
-								exclusive
-								onChange={handleDetailLevel}
-								aria-label="detail level"
-								id="detailGroup"
-							>
-								<ToggleButton value="basic" aria-label="basic">
-									Basic
-								</ToggleButton>
-								<ToggleButton value="detailed" aria-label="detailed">
-									Detailed
-								</ToggleButton>
-							</ToggleButtonGroup>
-						</div>
-						<div style={{ display: 'flex', flexDirection: 'column'}}>
+				{dataComplete && playerTwoPokemonDetails.length > 0 && (
+					<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+						<h3>Player 1</h3>
+						<Switch onChange={handlePlayerSwitch} />
 						<h3>Player 2</h3>
-							<ToggleButtonGroup
-								color="primary"
-								value={playerTwoDetailLevel}
-								exclusive
-								onChange={handlePlayerTwoDetailLevel}
-								aria-label="detail level"
-								id="detailGroup"
-							>
-								<ToggleButton value="basic" aria-label="basic">
-									Basic
-								</ToggleButton>
-								<ToggleButton value="detailed" aria-label="detailed">
-									Detailed
-								</ToggleButton>
-							</ToggleButtonGroup>
-						</div>
 					</div>
-				) : (
+				)}
 					<ToggleButtonGroup
 						color="primary"
 						value={detailLevel}
@@ -203,11 +170,10 @@ function Results(props) {
 							Detailed
 						</ToggleButton>
 					</ToggleButtonGroup>
-				)}
 				<div id="output"></div>
 				<div id="cardArea">
-					{dataComplete && pokemonDetails?.map(pokemon => (
-						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} noFairyInGame={gamesWithoutFairy.includes(version)}/>
+					{dataComplete && (playerTwoView ? playerTwoPokemonDetails : pokemonDetails)?.map(pokemon => (
+						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} noFairyInGame={gamesWithoutFairy.includes(version)} playerTwoView={playerTwoView}/>
 						))}
 				</div>
 		</div>
