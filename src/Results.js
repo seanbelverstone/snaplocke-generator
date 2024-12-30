@@ -87,7 +87,7 @@ function Results(props) {
 		const newPokemonList = [ ...pokemonDetails ];
 		const deletedPokemonList = [];
 		// maps through the copied list and pushes half randomly to the deleted pokemon list
-		for (let i = newPokemonList.length; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
+		for (let i = newPokemonList.length - 1; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
 			deletedPokemonList.push(newPokemonList.splice(Math.floor(Math.random() * newPokemonList.length), 1));
 		}
 		const mainPokemonListNames = newPokemonList.flatMap(val => val).map(mon => mon.name);

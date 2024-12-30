@@ -6,7 +6,7 @@ import './styles/PokemonCard.css';
 
 function PokemonCard(props) {
 	const { pokemon, detailLevel, animation, noFairyInGame, playerTwoView } = props;
-	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice', 'basculegion-male', 'shaymin-land', 'enamorus-incarnate', 'urshifu-single-strike'];
+	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice', 'basculegion-male', 'shaymin-land', 'enamorus-incarnate', 'urshifu-single-strike', 'maushold-family-of-four', 'dudunsparce-three-segment', 'squawkabilly-green-plumage', 'oinkologne-male', 'palafin-zero', 'tatsugiri-curly'];
 
 	const renderTypes = () => {
 		if (pokemon.data.types.length > 1) {
