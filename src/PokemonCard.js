@@ -5,8 +5,8 @@ import './styles/PokemonCard.css';
 
 
 function PokemonCard(props) {
-	const { pokemon, detailLevel, animation, noFairyInGame } = props;
-	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice', 'basculegion-male', 'shaymin-land', 'enamorus-incarnate', 'urshifu-single-strike'];
+	const { pokemon, detailLevel, animation, noFairyInGame, playerTwoView } = props;
+	const irregularNames = ['meowstic-male', 'basculin-red-striped', 'aegislash-shield', 'wormadam-plant', 'gourgeist-average', 'giratina-altered', 'darmanitan-standard', 'tornadus-incarnate', 'landorus-incarnate', 'thundurus-incarnate', 'zygarde-50', 'deoxys-normal', 'oricorio-baile', 'wishiwashi-solo', 'lycanroc-midday', 'mimikyu-disguised', 'minior-red-meteor', 'morpeko-full-belly', 'indeedee-male', 'toxtricity-amped', 'eiscue-ice', 'basculegion-male', 'shaymin-land', 'enamorus-incarnate', 'urshifu-single-strike', 'maushold-family-of-four', 'dudunsparce-three-segment', 'squawkabilly-green-plumage', 'oinkologne-male', 'palafin-zero', 'tatsugiri-curly'];
 
 	const renderTypes = () => {
 		if (pokemon.data.types.length > 1) {
@@ -39,13 +39,13 @@ function PokemonCard(props) {
 		<>
 		{/* Basic view */}
 		{detailLevel === 'basic' ? (
-			<div className="cardBasic" id={pokemon.name} style={{ animation: animation }}> {/* might change the color here */}
+			<div className="cardBasic" id={pokemon.name} style={{ animation: animation, backgroundColor: playerTwoView && '#c6ade6' }}> {/* might change the color here */}
 				<img className="cardImage" crossOrigin="anonymous" src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
 				<p>{toTitleCase(irregularNames.includes(pokemon.name) ? pokemon.name.split('-')[0] : pokemon.name)}</p>
 			</div>
 		) : (
 			// Detailed view
-			<div className="cardDetailed" id={pokemon.name} style={{ animation: animation }}> {/* might change the color here */}
+			<div className="cardDetailed" id={pokemon.name} style={{ animation: animation, backgroundColor: playerTwoView && '#c6ade6' }}> {/* might change the color here */}
 			<div className="imageAndType">
 				<img className="cardImage" crossOrigin="anonymous" src={pokemon.data.sprites?.front_default || 'https://media1.tenor.com/m/Tya2Q6TPVXQAAAAC/slowpoke-thinking.gif'} alt={`The pokemon ${pokemon.name} in their default front sprite`}/>
 				<div className="typesSection">

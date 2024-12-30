@@ -19,8 +19,10 @@ function App() {
 		indigoDisk: false
 	});
 	const [noLegendaries, setNoLegendaries]  = useState(false);
+	const [twoPlayerMode, setTwoPlayerMode]  = useState(false);
 	const [starterOption, setStarterOption] = useState("");
 	const [selectedStarter, setSelectedStarter] = useState("");
+	const [playerTwoStarter, setPlayerTwoStarter] = useState("");
 	const [submitted, setSubmitted] = useState(false);
 	const generationsWithExpansions = [...versions.galar, ...versions.paldea];
 	const [open, setOpen] = React.useState(false);
@@ -50,6 +52,7 @@ function App() {
 		setStarterOption("");
 		setSelectedVersion(e.target.getAttribute('value'))
 		setSelectedStarter("");
+		setPlayerTwoStarter("");
 		setVersionRegion(Object.entries(versions).filter(([name, array]) => array.includes(e.target.getAttribute('value')))[0][0])
 		setExpansionsSelected({
 			isleOfArmor: false,
@@ -64,9 +67,16 @@ function App() {
 		setNoLegendaries(e.target.checked)
 	}
 
+	const handleTwoPlayerMode = (e) => {
+		setSubmitted(false);
+		setTwoPlayerMode(e.target.checked)
+		e.target.checked === false && setPlayerTwoStarter("");
+	}
+
 	const handleStarterOptions = (e) => {
 		setSubmitted(false);
 		setSelectedStarter('');
+		setPlayerTwoStarter("");
 		setStarterOption(e.target.value);
 	}
 
@@ -75,9 +85,14 @@ function App() {
 		setSelectedStarter(e.target.value);
 	}
 
+	const handlePlayerTwoStarter = (e) => {
+		setSubmitted(false);
+		setPlayerTwoStarter(e.target.value);
+	}
+
 	const getStarters = () => {
 		return starters[versionRegion].map(starter => (
-			<MenuItem key={starter} value={starter}>{toTitleCase(starter)}</MenuItem>
+			<MenuItem key={starter} value={starter} disabled={twoPlayerMode ? starter === selectedStarter || starter === playerTwoStarter : false}>{toTitleCase(starter)}</MenuItem>
 		))
 	}
 
@@ -134,6 +149,7 @@ function App() {
 					<>
 						<div className="misc">
 						<FormControlLabel className="banLegendariesCheckbox" control={<Checkbox />} label="Ban Legendaries?" value={noLegendaries} onChange={handleSetLegendaries} />
+						<FormControlLabel className="twoPlayerMode" control={<Checkbox />} label="Two Player Mode" value={twoPlayerMode} onChange={handleTwoPlayerMode} />
 						{(selectedVersion !== 'letsGoPikachu' && selectedVersion !== 'letsGoEevee' && selectedVersion !== 'yellow') ? (<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
 							<InputLabel id="demo-simple-select-filled-label">Starter Options</InputLabel>
 							<Select
@@ -153,18 +169,35 @@ function App() {
 							<p><i>Starter options are not available for Yellow, Let's Go, Pikachu! or Let's Go, Eevee!</i></p>
 						)}
 						{(starterOption === 'chooseOne' && selectedVersion !== "" && (selectedVersion !== 'letsGoPikachu' || selectedVersion !== 'letsGoEevee' || selectedVersion !== 'yellow')) && (
-							<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
-								<InputLabel id="starterSelectLabel">Pick your starter</InputLabel>
-								<Select
-									labelId="starterSelect"
-									id="starterSelect"
-									value={selectedStarter}
-									onChange={handleStarterSelect}
-									className="starterDropdown"
-								>
-									{getStarters()}
-								</Select>
-							</FormControl>
+							<>
+								<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+									<InputLabel id="starterSelectLabel">{twoPlayerMode ? `Pick Player 1's Starter` : 'Pick your starter'}</InputLabel>
+									<Select
+										labelId="starterSelect"
+										id="starterSelect"
+										value={selectedStarter}
+										onChange={handleStarterSelect}
+										className="starterDropdown"
+									>
+										{getStarters()}
+									</Select>
+								</FormControl>
+								{twoPlayerMode && (
+									<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+										<InputLabel id="starterSelectLabel">Pick Player 2's Starter</InputLabel>
+										<Select
+											labelId="starterSelect"
+											id="starterSelect"
+											value={playerTwoStarter}
+											onChange={handlePlayerTwoStarter}
+											className="starterDropdown"
+										>
+											{getStarters()}
+										</Select>
+									</FormControl>
+								)}
+							</>
+
 						)}
 					</div>
 					{!submitted && (<Button
@@ -179,7 +212,18 @@ function App() {
 				</>
 				)}
 			</div>
-			{submitted && (<Results submitted={submitted} version={selectedVersion} versionRegion={versionRegion} noLegendaries={noLegendaries} selectedStarter={selectedStarter} expansionsSelected={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
+			{submitted && (
+				<Results
+					submitted={submitted}
+					version={selectedVersion}
+					versionRegion={versionRegion}
+					noLegendaries={noLegendaries}
+					twoPlayerMode={twoPlayerMode}
+					selectedStarter={selectedStarter}
+					playerTwoStarter={playerTwoStarter}
+					expansionsSelected={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)}
+					/>
+				)}
 			<span id="sourceDisclaimer">All images and information are obtained through <a href="https://pokeapi.co/docs/v2#info" target="blank" rel="noreferrer">PokeApi</a> and <a href="https://bulbapedia.bulbagarden.net/wiki/Main_Page" target="blank" rel="noreferrer">Bulbapedia</a>. All rights reserved.</span>
 		</div>
 

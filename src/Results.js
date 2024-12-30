@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { gamesWithoutFairy, legendaries, pokemonPerVersion, starters } from './gameData';
-import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button, Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import snapImage from './assets/snap.png';
 import PokemonCard from './PokemonCard';
 import snapSound from './assets/snapSound.mp3';
@@ -18,15 +18,17 @@ import ScreenshotButton from './ScreenshotButton';
 
 
 function Results(props) {
-	const { submitted, version, versionRegion, noLegendaries, selectedStarter, expansionsSelected } = props;
+	const { submitted, version, versionRegion, noLegendaries, twoPlayerMode, selectedStarter, playerTwoStarter, expansionsSelected } = props;
 	// eslint-disable-next-line no-unused-vars
 	const [pokemon, setPokemon] = useState([]);
 	const [pokemonDetails, setPokemonDetails] = useState([]);
+	const [playerTwoPokemonDetails, setPlayerTwoPokemonDetails] = useState([]);
 	const [dataComplete, setDataComplete] = useState(false);
 	const [deletedPokemon, setDeletedPokemon] = useState([]);
 	const [animation, setAnimation] = useState('none');
 	const [snapped, setSnapped] = useState(false);
 	const [detailLevel, setDetailLevel] = useState('basic');
+	const [playerTwoView, setPlayerTwoView] = useState(false);
 
 	useEffect(() => {
 		setDataComplete(false);
@@ -56,7 +58,10 @@ function Results(props) {
 			}
 			return pokemonList;
 		}
-		const finalPokemonList = pokemonListWithStarters();
+		let finalPokemonList = pokemonListWithStarters();
+		if (twoPlayerMode && playerTwoStarter !== '') {
+			finalPokemonList = [playerTwoStarter, ...finalPokemonList];
+		}
 		// if an expansion/s has/have been selected, add their pokemon to the list
 		expansionsSelected.length > 0 && expansionsSelected.forEach(exp => finalPokemonList.push(...pokemonPerVersion[exp][version]));
 		setPokemon(finalPokemonList)
@@ -82,9 +87,10 @@ function Results(props) {
 		const newPokemonList = [ ...pokemonDetails ];
 		const deletedPokemonList = [];
 		// maps through the copied list and pushes half randomly to the deleted pokemon list
-		for (let i = newPokemonList.length; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
+		for (let i = newPokemonList.length - 1; i >= (Math.ceil(pokemonDetails.length / 2)); i--) {
 			deletedPokemonList.push(newPokemonList.splice(Math.floor(Math.random() * newPokemonList.length), 1));
 		}
+		const mainPokemonListNames = newPokemonList.flatMap(val => val).map(mon => mon.name);
 		const deletedPokemonListNames = deletedPokemonList.flatMap(val => val).map(mon => mon.name);
 		// if there is a starter selected and the name list includes it, we want to remove it from that list and re-add it to the "safe" mon list
 		if (selectedStarter !== '' && deletedPokemonListNames.includes(selectedStarter)) {
@@ -94,25 +100,42 @@ function Results(props) {
 				newPokemonList.unshift(Object.values(pokemonDetails).filter(mon => mon.name === selectedStarter)[0]);
 			}
 		}
+		// Sorting the deleted pokemon
+		const sortedDeletedPokemonList = deletedPokemonList.flatMap(val => val).sort((a, b) => pokemonDetails.indexOf(a) - pokemonDetails.indexOf(b));
+		// if player two's starter is in list 1, then we want to make sure it's in the correct list
+		if (twoPlayerMode && playerTwoStarter !== '' && mainPokemonListNames.includes(playerTwoStarter)) {
+			const index = mainPokemonListNames.indexOf(playerTwoStarter);
+			if (index > -1) {
+				newPokemonList.splice(index, 1);
+				sortedDeletedPokemonList.unshift(Object.values(pokemonDetails).filter(mon => mon.name === playerTwoStarter)[0]);
+			}
+		}
 		// redefining the deleted name list here to ensure we're not missing it.
-		setDeletedPokemon(deletedPokemonList.flatMap(val => val).map(mon => mon.name));
+		setDeletedPokemon(sortedDeletedPokemonList.map(mon => mon.name));
 		setAnimation('fade 2s forwards');
 		setSnapped(true);
 		setTimeout(() => {
 			setPokemonDetails(newPokemonList);
+			twoPlayerMode && setPlayerTwoPokemonDetails(sortedDeletedPokemonList);
 			setAnimation('none');
 		}, 2000)
 
 	};
 
 	const handleDetailLevel = (event, value) => {
-		setDetailLevel(value);
+		if (value !== null) {
+			setDetailLevel(value);
+		}
+	}
+
+	const handlePlayerSwitch = (event, val) => {
+		setPlayerTwoView(val);
 	}
 
   return (
     <div className="results">
 				{snapped ? (
-					<ScreenshotButton version={version} detailLevel={detailLevel} />
+					<ScreenshotButton version={version} detailLevel={detailLevel} twoPlayerMode={twoPlayerMode} playerTwoView={playerTwoView} />
 				) : (
 					<Button
 						variant="contained"
@@ -125,26 +148,32 @@ function Results(props) {
 					</Button>
 
 				)}
-				
-				<ToggleButtonGroup
-					color="primary"
-					value={detailLevel}
-					exclusive
-					onChange={handleDetailLevel}
-					aria-label="detail level"
-					id="detailGroup"
-				>
-					<ToggleButton value="basic" aria-label="basic">
-						Basic
-					</ToggleButton>
-					<ToggleButton value="detailed" aria-label="detailed">
-						Detailed
-					</ToggleButton>
-				</ToggleButtonGroup>
+				{dataComplete && playerTwoPokemonDetails.length > 0 && (
+					<div id="twoPlayerToggle" style={{backgroundImage: `linear-gradient(#f5f5f5, ${playerTwoView ? '#c6ade6' : '#add8e6'})` }}>
+						<h3 style={!playerTwoView ? { webkitTextStroke: '1px black' } : {}}>Player 1</h3>
+						<Switch onChange={handlePlayerSwitch} />
+						<h3 style={playerTwoView ? { webkitTextStroke: '1px black' } : {}}>Player 2</h3>
+					</div>
+				)}
+					<ToggleButtonGroup
+						color="primary"
+						value={detailLevel}
+						exclusive
+						onChange={handleDetailLevel}
+						aria-label="detail level"
+						id="detailGroup"
+					>
+						<ToggleButton value="basic" aria-label="basic">
+							Basic
+						</ToggleButton>
+						<ToggleButton value="detailed" aria-label="detailed">
+							Detailed
+						</ToggleButton>
+					</ToggleButtonGroup>
 				<div id="output"></div>
 				<div id="cardArea">
-					{dataComplete && pokemonDetails?.map(pokemon => (
-						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} noFairyInGame={gamesWithoutFairy.includes(version)}/>
+					{dataComplete && (playerTwoView ? playerTwoPokemonDetails : pokemonDetails)?.map(pokemon => (
+						<PokemonCard key={pokemon.name} pokemon={pokemon} detailLevel={detailLevel} version={version} animation={deletedPokemon.includes(pokemon.name) ? animation : 'none'} noFairyInGame={gamesWithoutFairy.includes(version)} playerTwoView={playerTwoView}/>
 						))}
 				</div>
 		</div>
