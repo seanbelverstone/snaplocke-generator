@@ -93,7 +93,6 @@ function App() {
 					randomPlayerTwoStater = starters[versionRegion][Math.floor(Math.random() * 3)]
 				}
 				while (randomPlayerTwoStater === randomPlayerOneStarter);
-				console.log('playerOne: ', randomPlayerOneStarter, 'playerTwo: ', randomPlayerTwoStater)
 				setPlayerTwoStarter(randomPlayerTwoStater);
 			}
 		}
