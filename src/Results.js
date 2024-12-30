@@ -18,7 +18,7 @@ import ScreenshotButton from './ScreenshotButton';
 
 
 function Results(props) {
-	const { submitted, version, versionRegion, noLegendaries, selectedStarter, expansionsSelected } = props;
+	const { submitted, version, versionRegion, noLegendaries, twoPlayerMode, selectedStarter, playerTwoStarter, expansionsSelected } = props;
 	// eslint-disable-next-line no-unused-vars
 	const [pokemon, setPokemon] = useState([]);
 	const [pokemonDetails, setPokemonDetails] = useState([]);
@@ -27,6 +27,7 @@ function Results(props) {
 	const [animation, setAnimation] = useState('none');
 	const [snapped, setSnapped] = useState(false);
 	const [detailLevel, setDetailLevel] = useState('basic');
+	const [playerTwoDetailLevel, setPlayerTwoDetailLevel] = useState('basic');
 
 	useEffect(() => {
 		setDataComplete(false);
@@ -106,7 +107,15 @@ function Results(props) {
 	};
 
 	const handleDetailLevel = (event, value) => {
-		setDetailLevel(value);
+		if (value !== null) {
+			setDetailLevel(value);
+		}
+	}
+
+	const handlePlayerTwoDetailLevel = (event, value) => {
+		if (value !== null) {
+			setPlayerTwoDetailLevel(value);
+		}
 	}
 
   return (
@@ -125,22 +134,62 @@ function Results(props) {
 					</Button>
 
 				)}
-				
-				<ToggleButtonGroup
-					color="primary"
-					value={detailLevel}
-					exclusive
-					onChange={handleDetailLevel}
-					aria-label="detail level"
-					id="detailGroup"
-				>
-					<ToggleButton value="basic" aria-label="basic">
-						Basic
-					</ToggleButton>
-					<ToggleButton value="detailed" aria-label="detailed">
-						Detailed
-					</ToggleButton>
-				</ToggleButtonGroup>
+				{twoPlayerMode ? (
+					<div style={{ display: 'flex', flexDirection: 'row'}}>
+						<div style={{ display: 'flex', flexDirection: 'column'}}>
+							<h3>Player 1</h3>
+							<ToggleButtonGroup
+								color="primary"
+								value={detailLevel}
+								exclusive
+								onChange={handleDetailLevel}
+								aria-label="detail level"
+								id="detailGroup"
+							>
+								<ToggleButton value="basic" aria-label="basic">
+									Basic
+								</ToggleButton>
+								<ToggleButton value="detailed" aria-label="detailed">
+									Detailed
+								</ToggleButton>
+							</ToggleButtonGroup>
+						</div>
+						<div style={{ display: 'flex', flexDirection: 'column'}}>
+						<h3>Player 2</h3>
+							<ToggleButtonGroup
+								color="primary"
+								value={playerTwoDetailLevel}
+								exclusive
+								onChange={handlePlayerTwoDetailLevel}
+								aria-label="detail level"
+								id="detailGroup"
+							>
+								<ToggleButton value="basic" aria-label="basic">
+									Basic
+								</ToggleButton>
+								<ToggleButton value="detailed" aria-label="detailed">
+									Detailed
+								</ToggleButton>
+							</ToggleButtonGroup>
+						</div>
+					</div>
+				) : (
+					<ToggleButtonGroup
+						color="primary"
+						value={detailLevel}
+						exclusive
+						onChange={handleDetailLevel}
+						aria-label="detail level"
+						id="detailGroup"
+					>
+						<ToggleButton value="basic" aria-label="basic">
+							Basic
+						</ToggleButton>
+						<ToggleButton value="detailed" aria-label="detailed">
+							Detailed
+						</ToggleButton>
+					</ToggleButtonGroup>
+				)}
 				<div id="output"></div>
 				<div id="cardArea">
 					{dataComplete && pokemonDetails?.map(pokemon => (

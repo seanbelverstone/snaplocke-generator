@@ -71,7 +71,6 @@ function App() {
 		setSubmitted(false);
 		setTwoPlayerMode(e.target.checked)
 		e.target.checked === false && setPlayerTwoStarter("");
-		console.log(e.target.checked);
 	}
 
 	const handleStarterOptions = (e) => {
@@ -213,7 +212,18 @@ function App() {
 				</>
 				)}
 			</div>
-			{submitted && (<Results submitted={submitted} version={selectedVersion} versionRegion={versionRegion} noLegendaries={noLegendaries} selectedStarter={selectedStarter} expansionsSelected={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)} />)}
+			{submitted && (
+				<Results
+					submitted={submitted}
+					version={selectedVersion}
+					versionRegion={versionRegion}
+					noLegendaries={noLegendaries}
+					twoPlayerMode={twoPlayerMode}
+					selectedStarter={selectedStarter}
+					playerTwoStarter={playerTwoStarter}
+					expansionsSelected={Object.entries(expansionsSelected).flatMap(([key, value]) => value ? key : null).filter(item => item)}
+					/>
+				)}
 			<span id="sourceDisclaimer">All images and information are obtained through <a href="https://pokeapi.co/docs/v2#info" target="blank" rel="noreferrer">PokeApi</a> and <a href="https://bulbapedia.bulbagarden.net/wiki/Main_Page" target="blank" rel="noreferrer">Bulbapedia</a>. All rights reserved.</span>
 		</div>
 
