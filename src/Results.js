@@ -135,7 +135,7 @@ function Results(props) {
   return (
     <div className="results">
 				{snapped ? (
-					<ScreenshotButton version={version} detailLevel={detailLevel} />
+					<ScreenshotButton version={version} detailLevel={detailLevel} twoPlayerMode={twoPlayerMode} playerTwoView={playerTwoView} />
 				) : (
 					<Button
 						variant="contained"
@@ -149,10 +149,10 @@ function Results(props) {
 
 				)}
 				{dataComplete && playerTwoPokemonDetails.length > 0 && (
-					<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-						<h3>Player 1</h3>
+					<div id="twoPlayerToggle" style={{backgroundImage: `linear-gradient(#f5f5f5, ${playerTwoView ? '#c6ade6' : '#add8e6'})` }}>
+						<h3 style={!playerTwoView ? { webkitTextStroke: '1px black' } : {}}>Player 1</h3>
 						<Switch onChange={handlePlayerSwitch} />
-						<h3>Player 2</h3>
+						<h3 style={playerTwoView ? { webkitTextStroke: '1px black' } : {}}>Player 2</h3>
 					</div>
 				)}
 					<ToggleButtonGroup

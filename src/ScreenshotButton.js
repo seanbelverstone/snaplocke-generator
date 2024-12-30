@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import toTitleCase from "./utils";
 
 const ScreenshotButton = (props) => {
-	const { version, detailLevel } = props;
+	const { version, detailLevel, twoPlayerMode, playerTwoView } = props;
 	const [disabled, setDisabled] = useState(true);
 
 	setTimeout(() => {
@@ -22,7 +22,7 @@ const ScreenshotButton = (props) => {
 				function (canvas) {
 					const a = document.createElement('a');
 					a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-					a.download = `pokemon${toTitleCase(version).split(" ").join("")}SnappedList-${toTitleCase(detailLevel)}.jpg`;
+					a.download = `pokemon${toTitleCase(version).split(" ").join("")}${twoPlayerMode ? (playerTwoView ? '-Player2' : '-Player1') : ''}-SnappedList-${toTitleCase(detailLevel)}View.jpg`;
 					a.click();
 				})
 	}
